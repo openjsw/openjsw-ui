@@ -7,13 +7,9 @@
   <link rel="stylesheet" href="/public/styles.css" />
   <style>
     .main-content { max-width:750px; margin:36px auto 48px; padding:0 20px; }
-    .lang-switch { position:absolute; top:20px; right:30px; }
   </style>
 </head>
 <body>
-  <div class="lang-switch">
-    <a href="/en/" class="btn">English</a>
-  </div>
   <main class="main-content">
     <h1 style="margin-bottom:16px;">OpenJSW UI Kit 样式与常用组件</h1>
     <div style="color:#888;font-size:15px;">
@@ -40,6 +36,22 @@
       </div>
       <div class="class-label">class="input"</div>
     </section>
+
+    <section class="section">
+      <h2>语言切换器 Language Switcher</h2>
+      <div class="demo-box">
+        <div class="lang-switcher" tabindex="0" aria-label="切换语言">
+          <span class="lang-switcher__icon" aria-hidden="true">🌏</span>
+          <span class="lang-switcher__label">语言</span>
+          <span class="lang-switcher__current">简体中文</span>
+          <div class="lang-switcher__options">
+            <div class="lang-switcher__option" data-lang="zh">简体中文</div>
+            <div class="lang-switcher__option" data-lang="en">English</div>
+          </div>
+        </div>
+      </div>
+      <div class="class-label">class="lang-switcher" 支持 aria / 键盘操作 / 主题色</div>
+</section>
 
     <section class="section">
       <h2>卡片 Card</h2>
