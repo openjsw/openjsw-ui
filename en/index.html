@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head> 
+<meta charset="UTF-8"> 
+<title>OpenJSW UI Kit styles and common components</title> 
+<meta name="viewport" content="width=device-width,initial-scale=1" /> 
+<link rel="stylesheet" href="/public/styles.css" /> 
+<style> 
+.main-content { max-width:750px; margin:36px auto 48px; padding:0 20px; } 
+.lang-switch { position:absolute; top:20px; right:30px; } 
+</style>
+</head>
+<body> 
+<div class="lang-switch"> 
+<a href="/en/" class="btn">English</a> 
+</div> 
+<main class="main-content"> 
+<h1 style="margin-bottom:16px;">OpenJSW UI Kit styles and common components</h1>
+<div style="color:#888;font-size:15px;">
+A basic UI component library that supports accessibility, responsiveness, dark mode, and is suitable for modern development.
+</div>
+
+<section class="section">
+<h2>Button Button</h2>
+<div class="demo-box demo-col">
+<button class="btn js-alert" data-msg="You clicked the main button!">Main button</button>
+<button class="btn success js-alert" data-msg="Operation successful!">Success button</button>
+<button class="btn danger js-alert" data-msg="Dangerous operation!">Danger button</button>
+<button class="btn" disabled>Disable button</button>
+</div>
+<div class="class-label">class="btn" | "btn success" | "btn danger" | + js-alert</div>
+</section>
+
+<section class="section">
+<h2>Input box Input</h2>
+<div class="demo-box demo-col">
+<input class="input" placeholder="Please enter content">
+<input class="input" value="readonly" readonly>
+<input class="input" value="disabled" disabled>
+</div>
+<div class="class-label">class="input"</div>
+</section>
+
+<section class="section">
+<h2>Card</h2>
+<div class="demo-box">
+<div class="card">
+<div style="font-size:18px;margin-bottom:10px;">Card title</div>
+<div style="font-size:14px;color:#888;">Card content, suitable for placing small pieces of information. </div> 
+</div> 
+</div> 
+<div class="class-label">class="card"</div> 
+</section> 
+
+<section class="section"> 
+<h2>Search component Search Bar</h2> 
+<div class="demo-box"> 
+<div style="position:relative;max-width:320px;"> 
+<form class="search-bar" autocomplete="off" role="search"> 
+<span class="search-bar__icon" aria-hidden="true">🔍</span> 
+<input class="search-bar__input" type="search" placeholder="Search..." aria-label="Search" /> 
+</form> 
+<div class="search-results"></div> 
+</div> 
+</div> 
+<div class="class-label">class="search-bar" + search-bar__input</div> 
+</section> 
+
+<section class="section"> 
+<h2>Other assistance</h2> 
+<div style="color:#bbb;font-size:13px;">
+You can continue to expand tags, paging, notifications, theme switching, etc. All styles and JS support accessibility.
+</div>
+</section>
+</main>
+<script src="/public/common.js"></script>
+</body>
+</html>
