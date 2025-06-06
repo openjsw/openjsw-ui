@@ -6,7 +6,8 @@
     "/favicon.ico",
     "/robots.txt",
     "/static/*",
-    "/assets/*"
+    "/assets/*".
+    "/functions/_routes.json"
   ]
 }
 
