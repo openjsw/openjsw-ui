@@ -284,17 +284,54 @@ a:hover, a:focus-visible {
   background: #f1f6ff;
   color: var(--primary);
 }
-
-/* 暗色模式支持：可后续扩展
+/* 暗色模式 */
 [data-theme="dark"] {
   --bg: #16191C;
   --card-bg: #23272F;
   --border: #33373C;
-  --text: #fff;
+  --text: #F3F5F7;
   --text-secondary: #C3C8D4;
   --text-disabled: #6B7683;
   --primary: #3E8DF4;
   --primary-hover: #2566D9;
-  /* 其它变量同步扩展 */
+  --success: #19c37d;
+  --success-hover: #129E5C;
+  --danger: #F15454;
+  --danger-hover: #BB3737;
+  --warning: #FFC15A;
+  --info: #53B7FF;
+  --shadow: 0 2px 8px #0009;
+  --focus: 0 0 0 2px rgba(62, 141, 244, 0.25);
 }
-*/
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+    padding: 0 6px;
+  }
+  .card, .demo-box {
+    padding: 14px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .search-bar, .search-results {
+    width: 100%;
+    min-width: 0;
+  }
+  .lang-switcher {
+    min-width: 80px;
+    font-size: 14px;
+    padding: 7px 10px 7px 7px;
+  }
+  .lang-switcher__option {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 400px) {
+  body {
+    font-size: 13.5px;
+  }
+}
