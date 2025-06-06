@@ -1,40 +1,37 @@
-// functions/openjsw-ui.js
-export async function onRequest() {
-  return new Response(
-`// openjsw-ui.js v2024
+// openjsw-ui.js v2024 静态版
 window.OpenJSWUI = {
   header(title = "开放技术网") {
-    return \`
+    return `
       <header class="oj-header">
         <div class="oj-header-inner">
           <a href="/" class="oj-logo" aria-label="首页">OpenJSW</a>
-          <span class="oj-header-title">\${title}</span>
+          <span class="oj-header-title">${title}</span>
         </div>
-      </header>\`;
+      </header>`;
   },
   footer() {
-    return \`
+    return `
       <footer class="oj-footer">
         <div>© 2024 开放技术网 | <a href="https://openjsw.net" target="_blank" rel="noopener">openjsw.net</a></div>
-      </footer>\`;
+      </footer>`;
   },
   form({ action = "#", fields = [], btn = "提交" } = {}) {
     // fields: [{label, name, type, required, placeholder}]
-    return \`
-      <form class="oj-form" action="\${action}" method="post" autocomplete="on">
-        \${fields.map(f => \`
+    return `
+      <form class="oj-form" action="${action}" method="post" autocomplete="on">
+        ${fields.map(f => `
           <label>
-            <span>\${f.label}</span>
-            <input type="\${f.type || 'text'}" name="\${f.name}" placeholder="\${f.placeholder||''}" \${f.required?'required':''} aria-label="\${f.label}" />
-          </label>\`).join('')}
-        <button class="oj-btn" type="submit">\${btn}</button>
+            <span>${f.label}</span>
+            <input type="${f.type || 'text'}" name="${f.name}" placeholder="${f.placeholder||''}" ${f.required?'required':''} aria-label="${f.label}" />
+          </label>`).join('')}
+        <button class="oj-btn" type="submit">${btn}</button>
       </form>
-    \`;
+    `;
   },
   pagination({ page = 1, total = 1, onPage } = {}) {
     let html = '<div class="oj-pagination">';
     for (let i = 1; i <= total; ++i) {
-      html += \`<a href="#" class="oj-page\${i==page?' active':''}" data-page="\${i}" aria-label="第\${i}页">\${i}</a>\`;
+      html += `<a href="#" class="oj-page${i==page?' active':''}" data-page="${i}" aria-label="第${i}页">${i}</a>`;
     }
     html += '</div>';
     setTimeout(() => {
@@ -54,7 +51,7 @@ window.OpenJSWUI = {
   },
   message({ text, type = 'info', duration = 1800 }) {
     const msg = document.createElement('div');
-    msg.className = \`oj-message oj-\${type}\`;
+    msg.className = `oj-message oj-${type}`;
     msg.innerText = text;
     Object.assign(msg.style, {
       position: 'fixed',
@@ -77,7 +74,7 @@ window.OpenJSWUI = {
       let l = document.createElement('div');
       l.id = 'oj-loading';
       l.style.cssText = 'position:fixed;left:0;top:0;width:100vw;height:100vh;background:#fff6;z-index:10000;display:flex;align-items:center;justify-content:center;';
-      l.innerHTML = \`
+      l.innerHTML = `
         <div style="padding:1.2em 2.2em;background:#fff;border-radius:10px;box-shadow:0 2px 16px #0002;text-align:center;">
           <div class="oj-loading-spinner" style="margin-bottom:10px;">
             <svg width="32" height="32" viewBox="0 0 32 32" aria-label="加载动画">
@@ -86,8 +83,8 @@ window.OpenJSWUI = {
               </circle>
             </svg>
           </div>
-          <div style="font-size:1.05em;color:#246bfa">\${text}</div>
-        </div>\`;
+          <div style="font-size:1.05em;color:#246bfa">${text}</div>
+        </div>`;
       document.body.appendChild(l);
     } else {
       let l = document.getElementById('oj-loading');
@@ -95,10 +92,3 @@ window.OpenJSWUI = {
     }
   }
 };
-`, {
-    headers: {
-      "content-type": "application/javascript; charset=utf-8",
-      "cache-control": "public, max-age=86400"
-    }
-  });
-}
