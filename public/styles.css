@@ -1,0 +1,69 @@
+/* public/styles.css */
+:root {
+  --primary: #2476ff;
+  --success: #2ecc40;
+  --danger: #ff4747;
+  --border: #e6e6e6;
+  --radius: 8px;
+  --font: "Inter", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  margin: 0;
+  background: #fafbfc;
+  color: #222;
+  padding: 0;
+}
+
+h1, h2 {
+  margin: 32px 0 16px;
+}
+
+.demo-box {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 18px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.btn {
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: box-shadow .12s;
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 1px 3px #0001;
+}
+.btn:hover { box-shadow: 0 2px 8px #0002; background: #1857bd; }
+.btn.success { background: var(--success); }
+.btn.danger { background: var(--danger); }
+
+.input {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 7px 13px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color .15s;
+}
+.input:focus { border-color: var(--primary); }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  width: 220px;
+  box-shadow: 0 1px 6px #0001;
+}
+
