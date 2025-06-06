@@ -5,24 +5,23 @@ export async function onRequest() {
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>开放技术网 UI Demo</title>
+  <title>OpenJSW UI 组件演示</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/openjsw-ui.css">
+  <script src="/openjsw-ui.js"></script>
   <style>
-    #app { max-width: 620px; margin: 0 auto; }
+    #app { max-width: 660px; margin: 0 auto; }
     .oj-demo-btns { margin-bottom: 1em; }
+    .doc-header { margin-bottom: 2em;}
   </style>
 </head>
 <body>
   <div id="app"></div>
-  <script src="/openjsw-ui.js"></script>
   <script>
-    // 渲染统一 header
+    // 渲染 header
     document.body.insertAdjacentHTML('afterbegin', OpenJSWUI.header('开放技术网统一头部'));
     // 渲染 footer
     document.body.insertAdjacentHTML('beforeend', OpenJSWUI.footer());
-
-    // 演示表单
+    // 渲染表单
     document.getElementById('app').innerHTML = OpenJSWUI.form({
       action: "#",
       fields: [
@@ -31,7 +30,6 @@ export async function onRequest() {
       ],
       btn: "注册"
     });
-
     // 演示消息按钮
     document.getElementById('app').insertAdjacentHTML('beforeend', \`
       <div class="oj-demo-btns">
@@ -42,7 +40,6 @@ export async function onRequest() {
         <button class="oj-btn" onclick="OpenJSWUI.loading(true);setTimeout(()=>OpenJSWUI.loading(false),1200)">加载动画</button>
       </div>
     \`);
-
     // 演示分页组件
     let currentPage = 1, totalPages = 6;
     function renderPagination() {
@@ -61,8 +58,6 @@ export async function onRequest() {
       );
     }
     renderPagination();
-
-    // 可直接在页面测试表单、按钮、消息、分页等无障碍特性
   </script>
 </body>
 </html>
