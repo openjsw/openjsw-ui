@@ -1,8 +1,3 @@
-// functions/openjsw-ui.css
-export async function onRequest() {
-  return new Response(
-`/* openjsw-ui.css - 2024无障碍优化 */
-
 :root {
   /* 配色方案 */
   --color-primary:   #0066ff;   /* 主色 */
@@ -195,10 +190,3 @@ body {
 :-ms-input-placeholder { color: #aaa; }
 ::placeholder { color: #aaa; }
 `
-  , {
-    headers: {
-      "content-type": "text/css; charset=utf-8",
-      "cache-control": "public, max-age=86400"
-    }
-  });
-}
