@@ -1,0 +1,11 @@
+{
+  "include": [ "/*" ],
+  "exclude": [
+    "/public/*",     // 你的所有静态资源
+    "/favicon.ico",
+    "/robots.txt",
+    "/assets/*",     // 其它你想走静态的目录
+    "/images/*",
+    "/static/*"
+  ]
+}
