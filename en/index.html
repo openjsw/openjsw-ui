@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head> 
-<meta charset="UTF-8"> 
-<title>OpenJSW UI Kit styles and common components</title> 
-<meta name="viewport" content="width=device-width,initial-scale=1" /> 
-<link rel="stylesheet" href="/public/styles.css" /> 
-<style> 
-.main-content { max-width:750px; margin:36px auto 48px; padding:0 20px; } 
-.lang-switch { position:absolute; top:20px; right:30px; } 
-</style>
+<head>
+<meta charset="UTF-8">
+<title>OpenJSW UI Kit Styles and Common Components</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="/public/styles.css" />
 </head>
-<body> 
-<div class="lang-switch"> 
-<a href="/" class="btn">简体中文</a> 
-</div> 
-<main class="main-content"> 
-<h1 style="margin-bottom:16px;">OpenJSW UI Kit styles and common components</h1>
+<body>
+<section class="section">
+<h1>OpenJSW UI Kit Styles and Common Components</h1>
 <div style="color:#888;font-size:15px;">
-A basic UI component library that supports accessibility, responsiveness, dark mode, and is suitable for modern development.
+Basic UI component library that supports accessibility, responsiveness, dark mode, and is suitable for modern development.
 </div>
+</section>
 
 <section class="section">
 <h2>Button Button</h2>
@@ -42,7 +36,23 @@ A basic UI component library that supports accessibility, responsiveness, dark m
 </section>
 
 <section class="section">
-<h2>Card</h2>
+<h2>Language Switcher</h2>
+<div class="demo-box">
+<div class="lang-switcher" tabindex="0" aria-label="Switch Language">
+<span class="lang-switcher__icon" aria-hidden="true">🌏</span>
+<span class="lang-switcher__label">Language</span>
+<span class="lang-switcher__current">简体中文</span>
+<div class="lang-switcher__options">
+<div class="lang-switcher__option" data-lang="zh">简体中文</div>
+<div class="lang-switcher__option" data-lang="en">English</div>
+</div>
+</div>
+</div>
+<div class="class-label">class="lang-switcher" supports aria / keyboard operation / theme color</div>
+</section>
+
+<section class="section">
+<h2>Card Card</h2>
 <div class="demo-box">
 <div class="card">
 <div style="font-size:18px;margin-bottom:10px;">Card title</div>
