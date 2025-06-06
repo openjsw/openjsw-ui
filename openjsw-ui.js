@@ -1,35 +1,36 @@
 // openjsw-ui.js
+// OpenJSW 组件UI库：自动注入CSS，提供navbar、sider、footer、form、pagination、message、loading等组件。
 
-// 自动注入样式（全量CSS）
+// 自动注入全局样式
 (function () {
   if (!document.getElementById('oj-ui-style')) {
     const style = document.createElement('style');
     style.id = 'oj-ui-style';
     style.innerHTML = `
 :root {
-  --color-primary:   #0066ff;
+  --color-primary: #0066ff;
   --color-secondary: #2b2b2b;
-  --color-bg:        #ffffff;
-  --color-accent:    #00c2ff;
-  --color-success:   #22c55e;
-  --color-error:     #ff3a44;
-  --color-warning:   #ffbe2e;
-  --color-info:      #4ea8ff;
-  --color-border:    #e3e5ea;
+  --color-bg: #fff;
+  --color-accent: #00c2ff;
+  --color-success: #22c55e;
+  --color-error: #ff3a44;
+  --color-warning: #ffbe2e;
+  --color-info: #4ea8ff;
+  --color-border: #e3e5ea;
   --radius: 8px;
   --shadow: 0 2px 12px #0001;
   --text: var(--color-secondary);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg:        #181b1e;
+    --color-bg: #181b1e;
     --color-secondary: #ededed;
-    --color-border:    #31363a;
-    --text:            #ededed;
+    --color-border: #31363a;
+    --text: #ededed;
   }
 }
 body { background: var(--color-bg); color: var(--text); font-family: 'Inter', 'Segoe UI', Arial, sans-serif; margin: 0; min-height: 100vh;}
-/* ======= 顶部导航栏 ======= */
+/* 顶部导航栏 */
 .oj-navbar {
   width: 100%; background: #fff; border-bottom: 1px solid #eee; box-shadow: var(--shadow); height: 56px;
   display: flex; align-items: center; padding: 0 2em; z-index: 10; position: sticky; top: 0;
@@ -50,35 +51,32 @@ body { background: var(--color-bg); color: var(--text); font-family: 'Inter', 'S
   width: 120px;
 }
 .oj-navbar .oj-search-icon { margin-left: 0.3em; color: #bbb;}
-/* ======= 菜单/侧边栏 ======= */
-.oj-sider {
-  width: 210px; background: #f8f9fb; border-right: 1px solid #ececec; min-height: 90vh; padding: 1.5em 0 1.5em 0;
-  box-shadow: 1px 0 6px #0001; position: sticky; top: 56px;
+/* 响应式侧边栏+收起 */
+.oj-sider { width: 210px; background: #f8f9fb; border-right: 1px solid #ececec; min-height: 90vh; padding: 1.5em 0 1.5em 0;
+  box-shadow: 1px 0 6px #0001; position: sticky; top: 56px; transition: width 0.22s;}
+.oj-sider-collapsed { width: 52px !important; min-width: 52px !important; overflow-x: hidden; }
+.oj-sider-toggle {
+  position: absolute; top: 18px; right: -18px; background: #fff; border-radius: 50%; width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px #0002; cursor: pointer; border: 1px solid #eee; z-index: 2;
 }
+.oj-sider-collapsed .oj-menu-list li span { display: none; }
 .oj-menu-list { list-style: none; margin: 0; padding: 0;}
-.oj-menu-list li { padding: .75em 2em; color: #2b2b2b; cursor: pointer; border-left: 3px solid transparent; font-size: 1.06em;}
+.oj-menu-list li { padding: .75em 2em; color: #2b2b2b; cursor: pointer; border-left: 3px solid transparent; font-size: 1.06em; white-space: nowrap; display: flex; align-items: center;}
 .oj-menu-list li.active, .oj-menu-list li:hover { background: #e6f2ff; color: var(--color-primary); border-left: 3px solid var(--color-primary);}
 @media (max-width:900px) {.oj-sider{display:none;}}
-/* ======= 主内容 ======= */
 .oj-main-content { max-width: 900px; margin: 0 auto; padding: 2em 1em 2em 1em;}
 .oj-title { font-size: 1.55em; font-weight: bold; margin: 1.1em 0 1.2em;}
 .oj-demo-block { background: #f9fafb; border-radius: 12px; padding: 2em 2em 1em 2em; margin-bottom: 2.5em; box-shadow: 0 1px 6px #0001;}
-.oj-demo-title { font-size: 1.14em; font-weight: 500; margin-bottom: 1em; }
-/* ======= 页脚 ======= */
 .oj-footer { text-align: center; color: #888; padding: 2.5em 1em 1em 1em; font-size: 1em; margin-top: 2em;}
-/* ======= 按钮 ======= */
 .oj-btn {
   display: inline-block; border: none; border-radius: var(--radius); padding: 0.5em 1.2em; background: var(--color-primary); color: #fff;
   font-weight: 600; cursor: pointer; transition: background 0.15s, color 0.15s, filter 0.15s; box-shadow: var(--shadow); outline: none; margin-top: 1em;
 }
 .oj-btn:hover { filter: brightness(0.92);}
-.oj-btn:focus, .oj-btn:focus-visible {
-  outline: 2.5px solid var(--color-accent); outline-offset: 2px; box-shadow: 0 0 0 3px #00c2ff22;
-}
+.oj-btn:focus, .oj-btn:focus-visible { outline: 2.5px solid var(--color-accent); outline-offset: 2px; box-shadow: 0 0 0 3px #00c2ff22;}
 .oj-btn.oj-success { background: var(--color-success);}
 .oj-btn.oj-danger  { background: var(--color-error);}
 .oj-btn.oj-warning { background: var(--color-warning); color: #222;}
-/* ======= 表单 ======= */
 .oj-form label { display: block; margin-bottom: 1em; color: var(--color-secondary);}
 .oj-form input, .oj-form select, .oj-form textarea {
   width: 100%; box-sizing: border-box; border: 1px solid var(--color-border); border-radius: var(--radius); padding: .45em .8em;
@@ -87,7 +85,6 @@ body { background: var(--color-bg); color: var(--text); font-family: 'Inter', 'S
 .oj-form input:focus, .oj-form select:focus, .oj-form textarea:focus {
   outline: 2.5px solid var(--color-accent); border-color: var(--color-primary); box-shadow: 0 0 0 3px #00c2ff22;
 }
-/* ======= 消息提示 ======= */
 .oj-message {
   border-radius: var(--radius); padding: 1em 1.2em; margin: 1em 0; font-size: 1em; color: #222; box-shadow: 0 1px 4px #0001; border-left: 5px solid var(--color-info);
   background: #e9f1fa;
@@ -96,7 +93,6 @@ body { background: var(--color-bg); color: var(--text); font-family: 'Inter', 'S
 .oj-message.oj-danger  { border-left-color: var(--color-error); background: #f9e9e9;}
 .oj-message.oj-warning { border-left-color: var(--color-warning); background: #fffbe5;}
 .oj-message.oj-info    { border-left-color: var(--color-info); background: #e9f1fa;}
-/* ======= 分页 ======= */
 .oj-pagination {
   margin: 2em auto 1em auto; text-align: center;
 }
@@ -109,7 +105,6 @@ body { background: var(--color-bg); color: var(--text); font-family: 'Inter', 'S
 .oj-pagination .oj-page:hover {
   background: var(--color-primary); color: #fff; outline: 2px solid var(--color-accent);
 }
-/* ======= 加载动画 ======= */
 .oj-loading-spinner svg { display: block; margin: 0 auto;}
 ::-webkit-input-placeholder { color: #aaa;}
 ::-moz-placeholder { color: #aaa;}
@@ -120,7 +115,7 @@ body { background: var(--color-bg); color: var(--text); font-family: 'Inter', 'S
   }
 })();
 
-// OpenJSWUI组件
+// OpenJSWUI 组件对象
 window.OpenJSWUI = {
   // 顶部导航栏（支持logo、菜单、搜索）
   navbar({ logo = "OpenJSW", menus = [], search = false }) {
@@ -141,7 +136,7 @@ window.OpenJSWUI = {
       </nav>
     `;
   },
-  // 头部（极简，兼容老写法）
+  // 头部（兼容老写法）
   header(title = "开放技术网") {
     return `
       <header class="oj-header">
@@ -151,12 +146,15 @@ window.OpenJSWUI = {
         </div>
       </header>`;
   },
-  // 侧边菜单栏
-  sider({ items = [], active = "" }) {
+  // 侧边菜单栏，支持收起
+  sider({ items = [], active = "", collapsed = false }) {
     return `
-      <aside class="oj-sider">
+      <aside class="oj-sider${collapsed ? " oj-sider-collapsed" : ""}" id="oj-sider">
+        <div class="oj-sider-toggle" id="oj-sider-toggle" title="展开/收起菜单">
+          <svg width="22" height="22" viewBox="0 0 22 22"><rect width="18" height="3" x="2" y="5" rx="1.2"/><rect width="18" height="3" x="2" y="14" rx="1.2"/></svg>
+        </div>
         <ul class="oj-menu-list">
-          ${items.map(it => `<li class="${active===it.key?'active':''}" data-key="${it.key}">${it.name}</li>`).join('')}
+          ${items.map(it => `<li class="${active===it.key?'active':''}" data-key="${it.key}"><span>${it.name}</span></li>`).join('')}
         </ul>
       </aside>
     `;
@@ -165,7 +163,6 @@ window.OpenJSWUI = {
   footer() {
     return `<footer class="oj-footer">© 2024 开放技术网 | <a href="https://openjsw.net" target="_blank" rel="noopener">openjsw.net</a></footer>`;
   },
-
   // 表单
   form({ action = "#", fields = [], btn = "提交" } = {}) {
     return `
@@ -180,7 +177,6 @@ window.OpenJSWUI = {
       </form>
     `;
   },
-
   // 分页
   pagination({ page = 1, total = 1, onPage } = {}) {
     let html = '<div class="oj-pagination">';
@@ -203,7 +199,6 @@ window.OpenJSWUI = {
     }, 10);
     return html;
   },
-
   // 消息提示
   message({ text, type = 'info', duration = 1800 }) {
     const msg = document.createElement('div');
@@ -225,7 +220,6 @@ window.OpenJSWUI = {
       setTimeout(() => msg.remove(), 400);
     }, duration);
   },
-
   // 加载动画
   loading(show = true, text = '加载中...') {
     if (show) {
