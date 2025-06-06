@@ -114,16 +114,103 @@ h1, h2 {
   color: var(--text-disabled);
 }
 
-/* ---- 卡片 ---- */
+/* ---- 通用卡片加强 ---- */
 .card {
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px;
-  width: 220px;
-  box-shadow: 0 1px 6px #0001;
+  padding: 32px 28px 20px;
+  margin: 0 auto 28px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow);
   color: var(--text);
+  text-align: center;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  font-size: 1.09em;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 保证内容不会太靠边 */
+  word-break: break-word;
 }
+
+/* 支持类型修饰 */
+.card.danger {
+  border-color: var(--danger);
+  box-shadow: 0 4px 18px #e5393533, var(--shadow);
+}
+.card.success {
+  border-color: var(--success);
+  box-shadow: 0 4px 18px #18a05833, var(--shadow);
+}
+.card.info {
+  border-color: var(--info);
+  box-shadow: 0 4px 18px #4e8df433, var(--shadow);
+}
+.card.warning {
+  border-color: var(--warning);
+  box-shadow: 0 4px 18px #ffa60033, var(--shadow);
+}
+
+/* 卡片内子元素快速风格 */
+.card .card-icon {
+  font-size: 42px;
+  margin-bottom: 15px;
+  line-height: 1;
+}
+.card.danger .card-icon, .card.danger .card-title, .card.danger .card-domain { color: var(--danger);}
+.card.success .card-icon, .card.success .card-title, .card.success .card-domain { color: var(--success);}
+.card.info .card-icon, .card.info .card-title, .card.info .card-domain { color: var(--info);}
+.card.warning .card-icon, .card.warning .card-title, .card.warning .card-domain { color: var(--warning);}
+.card .card-title {
+  font-size: 1.32em;
+  font-weight: bold;
+  margin-bottom: 9px;
+  letter-spacing: 1px;
+}
+.card .card-domain {
+  font-weight: bold;
+  color: var(--danger);
+  word-break: break-all;
+  margin-bottom: 8px;
+  font-size: 1.08em;
+}
+.card .card-desc {
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  font-size: 1em;
+  text-align: center;
+}
+
+/* 支持左右布局（如需更复杂结构时加 row） */
+.card.row {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  text-align: left;
+}
+.card.row .card-icon { margin-bottom: 0; margin-right: 14px; }
+
+/* 暗色模式兼容边框色 */
+[data-theme="dark"] .card {
+  border-color: var(--border);
+}
+[data-theme="dark"] .card.danger { border-color: var(--danger); }
+[data-theme="dark"] .card.success { border-color: var(--success); }
+[data-theme="dark"] .card.info { border-color: var(--info); }
+[data-theme="dark"] .card.warning { border-color: var(--warning); }
+
+/* 移动端优化 */
+@media (max-width: 600px) {
+  .card {
+    padding: 14vw 4vw 8vw;
+    font-size: 0.99em;
+    max-width: 99vw;
+  }
+}
+
 
 /* ---- 可访问性辅助 ---- */
 /* 供 screen reader 和视觉焦点使用 */
