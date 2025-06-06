@@ -13,12 +13,13 @@ export async function onRequestGet({ request }) {
       </style>
     </head>
     <body>
+    <script src="/public/common.js"></script>
       <div style="max-width:700px;margin:36px auto 40px;padding:0 20px;">
         <h1>OpenJSW 通用样式 Demo</h1>
 
         <h2>按钮 Button</h2>
         <div class="demo-box">
-          <button class="btn">主按钮</button>
+          <button class="btn js-alert" data-msg="你点了按钮！">弹窗按钮</button>
           <button class="btn success">成功按钮</button>
           <button class="btn danger">危险按钮</button>
         </div>
