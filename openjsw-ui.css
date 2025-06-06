@@ -1,13 +1,14 @@
+/* openjsw-ui.css - 无障碍优化静态版 */
+
 :root {
-  /* 配色方案 */
-  --color-primary:   #0066ff;   /* 主色 */
-  --color-secondary: #2b2b2b;   /* 正文色 */
-  --color-bg:        #ffffff;   /* 背景 */
-  --color-accent:    #00c2ff;   /* 强调色 */
-  --color-success:   #22c55e;   /* 成功 */
-  --color-error:     #ff3a44;   /* 错误 */
-  --color-warning:   #ffbe2e;   /* 警告 */
-  --color-info:      #4ea8ff;   /* 信息 */
+  --color-primary:   #0066ff;
+  --color-secondary: #2b2b2b;
+  --color-bg:        #ffffff;
+  --color-accent:    #00c2ff;
+  --color-success:   #22c55e;
+  --color-error:     #ff3a44;
+  --color-warning:   #ffbe2e;
+  --color-info:      #4ea8ff;
   --color-border:    #e3e5ea;
   --radius: 8px;
   --shadow: 0 2px 12px #0001;
@@ -189,4 +190,3 @@ body {
 ::-moz-placeholder { color: #aaa; }
 :-ms-input-placeholder { color: #aaa; }
 ::placeholder { color: #aaa; }
-`
