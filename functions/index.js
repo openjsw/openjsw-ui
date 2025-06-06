@@ -109,21 +109,21 @@ export async function onRequestGet({ request }) {
           <div class="class-label">class="card"</div>
         </section>
 
-        <section class="section">
-          <h2>${text.lang} Language Switcher</h2>
-          <div class="demo-box">
-            <div class="lang-switcher" tabindex="0" aria-label="${text.lang}">
-              <span class="lang-switcher__icon" aria-hidden="true">🌏</span>
-              <span class="lang-switcher__option${isEN ? '' : ' active'}" data-lang="zh">${text.zh}</span>
-              <span class="lang-switcher__option${isEN ? ' active' : ''}" data-lang="en">${text.en}</span>
-              <div class="lang-switcher__options">
-                <div class="lang-switcher__option" data-lang="zh">${text.zh}</div>
-                <div class="lang-switcher__option" data-lang="en">${text.en}</div>
-              </div>
-            </div>
-          </div>
-          <div class="class-label">class="lang-switcher" 详见 CSS/JS</div>
-        </section>
+<section class="section">
+  <h2>${text.lang} Language Switcher</h2>
+  <div class="demo-box">
+    <div class="lang-switcher" tabindex="0" aria-label="${text.lang}">
+      <span class="lang-switcher__icon" aria-hidden="true">🌏</span>
+      <span class="lang-switcher__label">Language</span>
+      <span class="lang-switcher__current"></span>
+      <div class="lang-switcher__options">
+        <div class="lang-switcher__option" data-lang="zh">${text.zh}</div>
+        <div class="lang-switcher__option" data-lang="en">${text.en}</div>
+      </div>
+    </div>
+  </div>
+  <div class="class-label">class="lang-switcher" 详见 CSS/JS</div>
+</section>
 
         <section class="section">
           <h2>${text.searchTitle}</h2>
