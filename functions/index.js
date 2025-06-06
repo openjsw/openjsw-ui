@@ -1,7 +1,14 @@
 export async function onRequestGet({ request }) {
   const url = new URL(request.url);
   // 判断当前是否英文页面（路径以 /en/ 开头或就是 /en）
-  const isEN = url.pathname === '/en' || url.pathname.startsWith('/en/');
+let isEN = url.pathname === '/en' || url.pathname.startsWith('/en/');
+if (url.searchParams.get('lang')) {
+  isEN = url.searchParams.get('lang').toLowerCase().startsWith('en');
+}
+function getCurrentLang() {
+  return location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : 'zh';
+}
+
 
   // 多语言文本配置
   const text = isEN
