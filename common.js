@@ -1,158 +1,97 @@
-// openjsw v1.2 common.js
+/*!
+ * openjsw 开放技术网 - 通用组件库 V0.1
+ * 常用JS组件与工具函数
+ * 依赖原生，无第三方库
+ */
 
-// DOM Ready
-function ojReady(fn) {
-  if (document.readyState !== 'loading') fn();
-  else document.addEventListener('DOMContentLoaded', fn);
+// 消息提示（自动消失） type: success | danger | warning | info
+function ojMsg(msg, type = 'info', duration = 2200) {
+  const dom = document.createElement('div');
+  dom.className = 'oj-msg oj-msg-' + type;
+  dom.innerText = msg;
+  document.body.appendChild(dom);
+  dom.style.position = 'fixed';
+  dom.style.top = '48px';
+  dom.style.left = '50%';
+  dom.style.transform = 'translateX(-50%)';
+  dom.style.zIndex = '99999';
+  setTimeout(() => { dom.remove(); }, duration);
+  return dom;
 }
 
-// 简易 toast
-function ojToast(msg, timeout = 2200) {
-  let toast = document.createElement('div');
-  toast.className = 'oj-toast';
-  toast.textContent = msg;
-  Object.assign(toast.style, {
-    position: 'fixed',
-    bottom: '48px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    background: '#222d',
-    color: '#fff',
-    borderRadius: '10px',
-    padding: '10px 22px',
-    fontSize: '1rem',
-    zIndex: 9999,
-    opacity: 0,
-    transition: 'opacity .2s'
+// 简单确认框（callback为确定回调）
+function ojConfirm(msg, callback) {
+  let mask = document.createElement('div');
+  mask.className = 'oj-mask';
+  mask.innerHTML = `
+    <div class="oj-mask-content">
+      <div style="margin-bottom:16px">${msg}</div>
+      <button class="oj-btn oj-btn-primary" id="oj-confirm-ok">确定</button>
+      <button class="oj-btn" id="oj-confirm-cancel">取消</button>
+    </div>
+  `;
+  document.body.appendChild(mask);
+  mask.querySelector('#oj-confirm-ok').onclick = () => {
+    callback(true);
+    mask.remove();
+  };
+  mask.querySelector('#oj-confirm-cancel').onclick = () => {
+    callback(false);
+    mask.remove();
+  };
+}
+
+// 加载遮罩
+function ojLoading(show, text = '加载中...') {
+  let mask = document.getElementById('oj-loading-mask');
+  if (show) {
+    if (!mask) {
+      mask = document.createElement('div');
+      mask.className = 'oj-mask';
+      mask.id = 'oj-loading-mask';
+      mask.innerHTML = `<div class="oj-mask-content">${text}</div>`;
+      document.body.appendChild(mask);
+    }
+  } else if (mask) {
+    mask.remove();
+  }
+}
+
+// Tabs组件切换（使用 .oj-tabs, .oj-tab, .oj-tab-content结构）
+function ojTabs(selector) {
+  const tabs = document.querySelectorAll(selector + ' .oj-tab');
+  const contents = document.querySelectorAll(selector + ' .oj-tab-content');
+  tabs.forEach((tab, idx) => {
+    tab.onclick = function () {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      contents.forEach((c, cidx) => {
+        c.style.display = cidx === idx ? 'block' : 'none';
+      });
+    };
   });
-  document.body.appendChild(toast);
-  setTimeout(() => { toast.style.opacity = 1; }, 30);
-  setTimeout(() => {
-    toast.style.opacity = 0;
-    setTimeout(() => toast.remove(), 280);
-  }, timeout);
+  // 初始化显示第一个tab内容
+  if (tabs[0]) tabs[0].click();
 }
 
-// 复制文本到剪贴板
+// 复制到剪贴板
 function ojCopy(text) {
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => ojToast('已复制到剪贴板'));
+    navigator.clipboard.writeText(text);
+    ojMsg('已复制', 'success');
   } else {
-    let tmp = document.createElement('textarea');
-    tmp.value = text;
-    document.body.appendChild(tmp);
-    tmp.select();
+    // 兼容性处理
+    let ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
     document.execCommand('copy');
-    tmp.remove();
-    ojToast('已复制到剪贴板');
+    document.body.removeChild(ta);
+    ojMsg('已复制', 'success');
   }
 }
 
-// 移动端菜单弹窗
-function ojOpenMenu() {
-  document.getElementById('oj-mobile-menu').classList.add('active');
-  document.getElementById('oj-mobile-mask').style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-function ojCloseMenu() {
-  document.getElementById('oj-mobile-menu').classList.remove('active');
-  document.getElementById('oj-mobile-mask').style.display = 'none';
-  document.body.style.overflow = '';
-}
-function ojToggleMenu() {
-  const menu = document.getElementById('oj-mobile-menu');
-  if (menu.classList.contains('active')) ojCloseMenu();
-  else ojOpenMenu();
-}
-
-// 主题切换
-const THEME_SEQ = ['auto', 'light', 'dark'];
-const THEME_ICONS = {
-  auto: '/svg/color.svg',
-  light: '/svg/sun.svg',
-  dark:  '/svg/moon.svg'
+// 模块导出（支持ESM和全局用法）
+window.openjsw = {
+  ojMsg, ojConfirm, ojLoading, ojTabs, ojCopy
 };
-
-function getNextTheme(cur) {
-  const idx = THEME_SEQ.indexOf(cur);
-  return THEME_SEQ[(idx + 1) % THEME_SEQ.length];
-}
-function updateThemeBtn(theme) {
-  const icon = document.getElementById('oj-theme-icon');
-  if (icon && THEME_ICONS[theme]) {
-    icon.src = THEME_ICONS[theme];
-    icon.alt = theme;
-  }
-}
-function applyTheme(mode) {
-  const body = document.body, html = document.documentElement;
-  body.classList.remove('oj-theme-dark');
-  html.classList.remove('oj-theme-dark');
-  if (mode === 'dark') {
-    body.classList.add('oj-theme-dark');
-    html.classList.add('oj-theme-dark');
-    localStorage.setItem('oj-theme', 'dark');
-  } else if (mode === 'light') {
-    localStorage.setItem('oj-theme', 'light');
-  } else {
-    localStorage.removeItem('oj-theme');
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      body.classList.add('oj-theme-dark');
-      html.classList.add('oj-theme-dark');
-    }
-  }
-  updateThemeBtn(mode);
-}
-
-// 语言切换按钮高亮
-function updateLangBtns() {
-  let curLang = (document.documentElement.lang || '').toLowerCase();
-  document.querySelectorAll('.oj-lang-btn').forEach(btn => {
-    btn.classList.remove('selected');
-    let btnLang = (btn.dataset.lang || '').toLowerCase();
-    if (curLang && btnLang && curLang.startsWith(btnLang)) btn.classList.add('selected');
-  });
-}
-
-// 事件绑定
-ojReady(() => {
-  // 菜单按钮/遮罩
-  let btn = document.getElementById('oj-menu-btn');
-  let mask = document.getElementById('oj-mobile-mask');
-  if (btn) btn.onclick = ojToggleMenu;
-  if (mask) mask.onclick = ojCloseMenu;
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') ojCloseMenu(); });
-
-  // 主题切换
-  let theme = localStorage.getItem('oj-theme') || 'auto';
-  applyTheme(theme);
-
-  let themeBtn = document.getElementById('oj-theme-toggle');
-  if (themeBtn) {
-    themeBtn.onclick = () => {
-      let now = localStorage.getItem('oj-theme') || 'auto';
-      let next = getNextTheme(now);
-      applyTheme(next);
-    };
-  }
-  // 跟随系统
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if(!localStorage.getItem('oj-theme')) applyTheme('auto');
-  });
-
-  // 语言高亮
-  updateLangBtns();
-
-  // oj-copy
-  document.querySelectorAll('.oj-copy[data-copy]').forEach(btn => {
-    btn.addEventListener('click', () => ojCopy(btn.getAttribute('data-copy')));
-  });
-});
-
-// 导出
-window.ojReady = ojReady;
-window.ojToast = ojToast;
-window.ojCopy = ojCopy;
-window.ojOpenMenu = ojOpenMenu;
-window.ojCloseMenu = ojCloseMenu;
-window.applyTheme = applyTheme;
