@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+export async function onRequestGet(context) {
+  return new Response(
+    `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -30,4 +32,9 @@
   </div>
   <script src="/common.js"></script>
 </body>
-</html>
+</html>`,
+    {
+      headers: { "content-type": "text/html; charset=UTF-8" }
+    }
+  );
+}
