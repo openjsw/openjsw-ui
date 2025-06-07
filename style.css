@@ -1,4 +1,4 @@
-/* openjsw 样式库 v0.6 */
+/* openjsw 样式库 v0.7 */
 /* 命名空间 .oj- 开头，支持 header/nav/tool、主题/语言切换、多主题、无障碍等 */
 
 :root {
@@ -25,7 +25,7 @@
   --oj-warning-contrast: #826b18;
 }
 
-/* -------- header/nav/tool 主体 -------- */
+/* header/nav/tool 主体 */
 .oj-header {
   width: 100%;
   min-height: 54px;
@@ -66,7 +66,7 @@
 .oj-header .oj-tool {
   display: flex; align-items: center; gap: 12px;
 }
-/* -------- 工具按钮样式（主题/语言） -------- */
+/* 工具按钮样式（主题/语言） */
 .oj-tool .oj-theme-btn,
 .oj-tool .oj-lang-btn {
   background: transparent;
@@ -103,25 +103,32 @@
   opacity: .85;
 }
 
-/* 响应式适配 */
+/* 响应式 header/nav/tool */
 @media (max-width: 700px) {
-  .oj-header { padding: 0 6vw; min-height: 46px;}
-  .oj-header .oj-logo { font-size: 1.1em;}
-  .oj-header .oj-nav { gap: 8px;}
-  .oj-header .oj-tool { gap: 7px;}
+  .oj-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0 2vw;
+    min-height: auto;
+  }
+  .oj-header .oj-logo { justify-content: center; margin: 8px 0 0 0; font-size: 1.03em; }
+  .oj-header .oj-nav { justify-content: center; gap: 8px; margin: 5px 0;}
+  .oj-header .oj-tool { justify-content: flex-end; margin: 2px 0 7px 0; gap: 5px;}
 }
 @media (max-width: 480px) {
-  .oj-header { flex-direction: column; align-items: stretch; gap:0; padding:0 2vw;}
-  .oj-header .oj-tool { justify-content: flex-end; }
+  .oj-header .oj-nav, .oj-header .oj-tool { flex-wrap: wrap; font-size: .97em; }
+  .oj-header .oj-logo img { height: 20px;}
+  .oj-card { padding: 7px 2px; margin-bottom: 12px;}
+  pre, code { font-size: .9em; padding: 4px 2px;}
 }
 
-/* -------- 卡片/按钮/基础布局 -------- */
+/* 卡片/按钮/基础布局 */
 .oj-container {
   max-width: 960px;
   margin: 40px auto 0;
   padding: 0 16px;
 }
-
 .oj-card {
   background: var(--oj-card);
   border: 1px solid var(--oj-border);
@@ -132,7 +139,6 @@
   transition: box-shadow 0.2s;
 }
 .oj-card:hover { box-shadow: 0 4px 24px rgba(16,30,54,0.08); }
-
 .oj-btn {
   display: inline-block;
   padding: 8px 20px;
@@ -156,7 +162,6 @@
   outline: 2px solid var(--oj-primary);
   outline-offset: 2px;
 }
-
 .oj-title {
   font-size: 2rem;
   font-weight: 700;
@@ -167,7 +172,6 @@
   color: var(--oj-muted);
   font-size: 0.97em;
 }
-
 .oj-list {
   list-style: none;
   margin: 0;
@@ -178,7 +182,6 @@
   border-bottom: 1px solid var(--oj-border);
 }
 .oj-list li:last-child { border-bottom: none; }
-
 .oj-input, .oj-select {
   padding: 8px 12px;
   border-radius: 6px;
@@ -199,9 +202,7 @@
   color: #b0b3b8;
   cursor: not-allowed;
 }
-
 .oj-flex { display: flex; align-items: center; gap: 16px; }
-
 .oj-footer {
   margin-top: 48px;
   padding: 20px 0 12px;
@@ -211,16 +212,13 @@
   font-size: 0.98em;
   background: transparent;
 }
-
-/* -------- 响应式基础 -------- */
 @media (max-width: 600px) {
   .oj-container { margin: 24px auto 0; padding: 0 4vw; }
   .oj-card { padding: 12px; }
   .oj-title { font-size: 1.3rem; }
   pre, code { font-size: 0.93em; }
 }
-
-/* -------- Alert 提示 -------- */
+/* Alert 提示 */
 .oj-alert {
   display: flex;
   align-items: center;
@@ -248,8 +246,7 @@
   color: var(--oj-warning-contrast);
   border-color: #f2e4b3;
 }
-
-/* -------- 标签 Tag -------- */
+/* 标签 Tag */
 .oj-tag {
   display: inline-block;
   padding: 2px 10px;
@@ -269,8 +266,7 @@
   background: var(--oj-accent);
   color: var(--oj-accent-contrast);
 }
-
-/* -------- 徽章 Badge -------- */
+/* 徽章 Badge */
 .oj-badge {
   display: inline-block;
   min-width: 22px;
@@ -283,8 +279,7 @@
   vertical-align: middle;
   margin-left: 4px;
 }
-
-/* -------- 表格 Table -------- */
+/* 表格 Table */
 .oj-table {
   width: 100%;
   border-collapse: collapse;
@@ -304,8 +299,7 @@
   font-weight: 600;
 }
 .oj-table tr:last-child td { border-bottom: none; }
-
-/* -------- 加载动画 Spinner -------- */
+/* 加载动画 Spinner */
 .oj-spinner {
   display: inline-block;
   width: 22px; height: 22px;
@@ -318,27 +312,24 @@
 @keyframes oj-spin {
   100% { transform: rotate(360deg);}
 }
-
-/* -------- 暗色主题覆盖 -------- */
+/* 暗色净化：无白色！ */
 .oj-theme-dark, .oj-theme-dark body {
-  --oj-bg: #181c23;
-  --oj-card: #212532;
-  --oj-primary: #4a90e2;
+  --oj-bg: #161b22;
+  --oj-card: #232735;
+  --oj-primary: #4187d4;
   --oj-primary-contrast: #fff;
-  --oj-accent: #42d392;
-  --oj-accent-contrast: #121818;
-  --oj-border: #2e3442;
-  --oj-text: #f3f6fb;
-  --oj-muted: #9ba4b4;
-  --oj-shadow: 0 2px 8px rgba(18, 25, 35, 0.19);
-  --oj-success-bg: #19322a;
-  --oj-success-contrast: #6ef2b0;
-  --oj-error-bg: #321d1b;
-  --oj-error-contrast: #ffadad;
-  --oj-warning-bg: #3a3219;
-  --oj-warning-contrast: #ffd570;
+  --oj-accent: #19c37d;
+  --oj-accent-contrast: #161b22;
+  --oj-border: #273043;
+  --oj-text: #e7ecf3;
+  --oj-muted: #98a5b3;
+  --oj-success-bg: #18312a;
+  --oj-success-contrast: #6df29e;
+  --oj-error-bg: #381f22;
+  --oj-error-contrast: #f285a7;
+  --oj-warning-bg: #373116;
+  --oj-warning-contrast: #ffda6e;
 }
-.oj-theme-dark .oj-header { background: #232735; border-bottom: 1px solid var(--oj-border);}
 .oj-theme-dark .oj-card,
 .oj-theme-dark .oj-table,
 .oj-theme-dark .oj-input,
@@ -346,6 +337,7 @@
 .oj-theme-dark .oj-alert {
   background: var(--oj-card);
   color: var(--oj-text);
+  border-color: var(--oj-border);
 }
 .oj-theme-dark .oj-btn,
 .oj-theme-dark .oj-tag.oj-tag-primary,
@@ -358,17 +350,56 @@
   color: var(--oj-accent-contrast);
 }
 .oj-theme-dark .oj-table th {
-  background: #232735;
+  background: #1e222b;
   color: var(--oj-muted);
+}
+.oj-theme-dark .oj-table {
+  background: var(--oj-card);
+}
+.oj-theme-dark .oj-list li {
+  border-bottom: 1px solid var(--oj-border);
 }
 .oj-theme-dark .oj-input,
 .oj-theme-dark .oj-select {
-  border: 1.5px solid var(--oj-border);
+  background: #1c222a;
+  color: #e9f3ff;
+  border-color: var(--oj-border);
 }
-.oj-theme-dark .oj-nav a.active,
-.oj-theme-dark .oj-nav a:hover { background: var(--oj-primary); color: var(--oj-primary-contrast);}
-.oj-theme-dark .oj-tool .oj-theme-btn:focus-visible,
-.oj-theme-dark .oj-tool .oj-lang-btn:focus-visible {
-  background: var(--oj-primary);
-  color: var(--oj-primary-contrast);
+.oj-theme-dark .oj-input:focus-visible,
+.oj-theme-dark .oj-select:focus-visible {
+  border-color: var(--oj-primary);
+  box-shadow: 0 0 0 3px #3879be66;
+}
+.oj-theme-dark .oj-input:disabled,
+.oj-theme-dark .oj-select:disabled {
+  background: #232a36;
+  color: #4d5564;
+}
+.oj-theme-dark .oj-alert {
+  background: #232735;
+  border-color: #273043;
+}
+.oj-theme-dark .oj-alert.oj-alert-success {
+  background: #18312a;
+  color: #6df29e;
+  border-color: #19c37d;
+}
+.oj-theme-dark .oj-alert.oj-alert-error {
+  background: #381f22;
+  color: #f285a7;
+  border-color: #f285a7;
+}
+.oj-theme-dark .oj-alert.oj-alert-warning {
+  background: #373116;
+  color: #ffda6e;
+  border-color: #ffbf2f;
+}
+.oj-theme-dark pre, .oj-theme-dark code {
+  background: #22262e !important;
+  color: #d5dae3 !important;
+}
+.oj-theme-dark .oj-footer {
+  background: transparent;
+  color: var(--oj-muted);
+  border-top: 1px solid var(--oj-border);
 }
