@@ -7,17 +7,25 @@ export async function onRequestGet(context) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/style.css">
   <style>
-    pre, code {
-      font-family: SFMono-Regular, Consolas, monospace;
-      background: #f4f7fa;
-      border-radius: 5px;
-      padding: 8px 12px;
-      color: #485169;
-      font-size: 0.97em;
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-    pre { margin: 8px 0 0 0; overflow-x: auto; }
+pre, code {
+  font-family: SFMono-Regular, Consolas, monospace;
+  background: #f4f7fa;
+  border-radius: 5px;
+  padding: 8px 12px;
+  color: #485169;
+  font-size: 0.97em;
+  white-space: pre-wrap;       /* 多行代码自动换行！ */
+  word-break: break-all;       /* 任意断字，避免超宽单词撑出 */
+  overflow-x: auto;            /* 横向滚动兜底 */
+  box-sizing: border-box;
+  line-height: 1.65;
+}
+pre {
+  margin: 8px 0 0 0;
+  overflow-x: auto;
+  /* 为了移动端友好，可以加如下最大宽度 */
+  max-width: 100%;
+}
     .demo-label { margin-bottom:8px; font-weight:600; font-size:1.1em;}
     .demo-section { margin-bottom:38px;}
     .contrast-demo {
