@@ -3,7 +3,7 @@ export async function onRequestGet(context) {
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>openjsw UI 样式库 v0.4 Demo</title>
+  <title>openjsw UI v0.5 主题/Header Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/style.css">
   <style>
@@ -20,24 +20,6 @@ export async function onRequestGet(context) {
     pre { margin: 8px 0 0 0; overflow-x: auto; }
     .demo-label { margin-bottom:8px; font-weight:600; font-size:1.1em;}
     .demo-section { margin-bottom:38px;}
-    .theme-switcher {
-      position: fixed; top: 22px; right: 22px; z-index: 50;
-    }
-    .theme-switcher button {
-      background: var(--oj-primary);
-      color: var(--oj-primary-contrast);
-      border: none;
-      border-radius: 8px;
-      padding: 7px 17px;
-      font-size: 1em;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(16,30,54,0.06);
-      margin-left: 6px;
-    }
-    .theme-switcher button:focus-visible {
-      outline: 2px solid var(--oj-accent);
-    }
-    /* 高对比演示区域 */
     .contrast-demo {
       display: flex;
       gap: 8px;
@@ -54,26 +36,62 @@ export async function onRequestGet(context) {
     .contrast-success { background: var(--oj-success); color: var(--oj-success-contrast);}
     .contrast-error   { background: var(--oj-error); color: var(--oj-error-contrast);}
     .contrast-warning { background: var(--oj-warning); color: var(--oj-warning-contrast);}
-    @media (max-width: 600px) {
-      .theme-switcher { position: static; text-align: right; margin-bottom: 12px;}
+    /* Header适配（主要样式在 style.css v0.5）*/
+    .oj-header .oj-logo img { height: 26px; margin-right: 8px; }
+    .oj-header .oj-logo { display: flex; align-items: center; gap: 6px;}
+    .oj-header .oj-theme-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4em;
+      margin-left: 8px;
+      padding: 2px 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 8px;
+      color: var(--oj-primary);
+      outline: none;
+    }
+    .oj-header .oj-theme-btn:focus-visible {
+      background: var(--oj-primary);
+      color: var(--oj-primary-contrast);
+      outline: 2px solid var(--oj-accent);
+    }
+    @media (max-width: 700px) {
+      .oj-header { padding: 0 6vw;}
+      .oj-header .oj-logo img { height: 22px;}
+    }
+    @media (max-width: 480px) {
+      .oj-header { flex-direction: column; align-items: stretch; gap:0; padding:0 2vw;}
+      .oj-header .oj-right { justify-content: flex-end; }
     }
   </style>
 </head>
 <body>
-<div class="theme-switcher" aria-label="主题切换区">
-  <button onclick="switchTheme('light')" aria-pressed="false" aria-label="切换到明亮模式">☀️ 明亮</button>
-  <button onclick="switchTheme('dark')" aria-pressed="false" aria-label="切换到暗色模式">🌙 暗色</button>
-  <button onclick="switchTheme('auto')" aria-pressed="false" aria-label="自动跟随系统">🖥️ 跟随系统</button>
+<div class="oj-header">
+  <a href="/" class="oj-logo" aria-label="openjsw UI 首页">
+    <img src="https://cdn.jsdelivr.net/gh/openjsw/openjsw-ui/logo.svg" alt="logo" />
+    openjsw UI
+  </a>
+  <nav class="oj-nav" aria-label="主导航">
+    <a href="/" class="active">首页</a>
+    <a href="https://github.com/openjsw/openjsw-ui" target="_blank">GitHub</a>
+    <a href="#components">组件</a>
+  </nav>
+  <div class="oj-right">
+    <button class="oj-theme-btn" id="oj-theme-toggle"
+      aria-label="切换主题" title="切换主题">
+      <span id="oj-theme-icon">🌙</span>
+    </button>
+  </div>
 </div>
 <div class="oj-container">
-  <div class="oj-card">
-    <div class="oj-title">openjsw UI v0.4 主题/无障碍 Demo</div>
+  <div class="oj-card" style="margin-top:36px;">
+    <div class="oj-title">openjsw UI v0.5 主题/Header/无障碍 Demo</div>
     <div class="oj-muted" id="a11y-desc" tabindex="0" aria-live="polite">
-      本样式库支持多主题/自定义色板/暗色模式，所有按钮和表单元素都实现了焦点可见、色彩对比度达标，辅助屏幕阅读器和键盘用户无障碍访问。
+      样式库支持全局 header/主题切换，所有按钮、输入框、表单均焦点可见且对比度友好，适合前端后台、社区、开源官网、管理系统等场景。支持移动端自适应，极易扩展。
     </div>
   </div>
-
-  <div class="oj-card demo-section">
+  <div class="oj-card demo-section" id="components">
     <div class="demo-label">主题色板对比（Theme Colors Contrast）</div>
     <div class="contrast-demo">
       <span class="contrast-primary">主色 Primary</span>
@@ -86,7 +104,6 @@ export async function onRequestGet(context) {
       使用 <code>var(--oj-primary)</code> 等变量控制主题色，所有主色上的文本都有高对比度。
     </div>
   </div>
-
   <div class="oj-card demo-section">
     <div class="demo-label">按钮/Button <span class="oj-badge">a11y</span></div>
     <button class="oj-btn" onclick="ojToast('你点击了主按钮！')" aria-label="主操作按钮">主按钮</button>
@@ -94,7 +111,6 @@ export async function onRequestGet(context) {
     <pre><code>&lt;button class="oj-btn"&gt;主按钮&lt;/button&gt;
 &lt;button class="oj-btn oj-copy" data-copy="内容"&gt;一键复制&lt;/button&gt;</code></pre>
   </div>
-
   <div class="oj-card demo-section">
     <div class="demo-label">输入框/选择框（Input/Select）<span class="oj-badge">a11y</span></div>
     <label for="demo-input" style="font-weight:500">输入内容</label>
@@ -110,7 +126,6 @@ export async function onRequestGet(context) {
 &lt;label for="demo-select"&gt;选择&lt;/label&gt;
 &lt;select id="demo-select" class="oj-select"&gt;...&lt;/select&gt;</code></pre>
   </div>
-
   <div class="oj-card demo-section">
     <div class="demo-label">提示框（Alert）</div>
     <div class="oj-alert" role="status">普通提示信息</div>
@@ -122,7 +137,6 @@ export async function onRequestGet(context) {
 &lt;div class="oj-alert oj-alert-error"&gt;错误提示&lt;/div&gt;
 &lt;div class="oj-alert oj-alert-warning"&gt;警告提示&lt;/div&gt;</code></pre>
   </div>
-
   <div class="oj-card demo-section">
     <div class="demo-label">标签/Tag &amp; 徽章/Badge</div>
     <span class="oj-tag">普通标签</span>
@@ -134,7 +148,6 @@ export async function onRequestGet(context) {
 &lt;span class="oj-tag oj-tag-accent"&gt;强调标签&lt;/span&gt;
 &lt;span class="oj-badge"&gt;8&lt;/span&gt;</code></pre>
   </div>
-
   <div class="oj-card demo-section">
     <div class="demo-label">表格（Table）</div>
     <table class="oj-table" aria-label="示例表格">
@@ -155,54 +168,63 @@ export async function onRequestGet(context) {
   &lt;/tbody&gt;
 &lt;/table&gt;</code></pre>
   </div>
-
   <div class="oj-card demo-section">
     <div class="demo-label">加载动画（Spinner）</div>
     <span class="oj-spinner" aria-label="加载中"></span>
     <pre><code>&lt;span class="oj-spinner"&gt;&lt;/span&gt;</code></pre>
   </div>
-
   <div class="oj-footer" style="margin-top:60px;">
-    &copy; 2024 openjsw 开放技术 | <span class="oj-muted">支持多主题、暗色、自定义色板与无障碍</span>
+    &copy; 2024 openjsw 开放技术 | <span class="oj-muted">v0.5 支持全局 header、响应式、主题切换与无障碍</span>
   </div>
 </div>
 <script src="/common.js"></script>
 <script>
-function switchTheme(mode) {
+// 单按钮主题切换（light→dark→auto→light…）
+const THEME_SEQ = ['light', 'dark', 'auto'];
+const THEME_ICONS = { light: '☀️', dark: '🌙', auto: '🖥️' };
+function getNextTheme(cur) {
+  const idx = THEME_SEQ.indexOf(cur);
+  return THEME_SEQ[(idx + 1) % THEME_SEQ.length];
+}
+function updateThemeBtn(theme) {
+  document.getElementById('oj-theme-icon').textContent = THEME_ICONS[theme];
+  let btn = document.getElementById('oj-theme-toggle');
+  btn.setAttribute('aria-label', {
+    light: '当前为明亮模式，点击切换为暗色模式',
+    dark: '当前为暗色模式，点击切换为跟随系统',
+    auto: '当前为跟随系统，点击切换为明亮模式'
+  }[theme]);
+}
+function applyTheme(mode) {
   const body = document.body;
   body.classList.remove('oj-theme-dark');
   if (mode === 'dark') {
     body.classList.add('oj-theme-dark');
     localStorage.setItem('oj-theme', 'dark');
   } else if (mode === 'light') {
-    // 默认就是明亮模式
     localStorage.setItem('oj-theme', 'light');
   } else {
-    // auto: 跟随系统
     localStorage.removeItem('oj-theme');
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       body.classList.add('oj-theme-dark');
     }
   }
+  updateThemeBtn(mode);
 }
-(function autoTheme(){
-  const theme = localStorage.getItem('oj-theme');
-  if(theme === 'dark'){
-    document.body.classList.add('oj-theme-dark');
-  }else if(theme === 'light'){
-    document.body.classList.remove('oj-theme-dark');
-  }else{
-    if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-      document.body.classList.add('oj-theme-dark');
+document.addEventListener('DOMContentLoaded', () => {
+  let theme = localStorage.getItem('oj-theme') || 'auto';
+  applyTheme(theme);
+  document.getElementById('oj-theme-toggle').onclick = () => {
+    let now = localStorage.getItem('oj-theme') || 'auto';
+    let next = getNextTheme(now);
+    applyTheme(next);
+  };
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if(!localStorage.getItem('oj-theme')){
+      applyTheme('auto');
     }
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if(!localStorage.getItem('oj-theme')){
-        if(e.matches) document.body.classList.add('oj-theme-dark');
-        else document.body.classList.remove('oj-theme-dark');
-      }
-    });
-  }
-})();
+  });
+});
 </script>
 </body>
 </html>`, {
