@@ -35,16 +35,7 @@ html, body { height: 100%; background: var(--oj-bg); color: var(--oj-text); font
 .oj-footer { flex-shrink: 0; margin-top: 48px; padding: 20px 0 12px; border-top: 1px solid var(--oj-border); text-align: center; color: var(--oj-muted); font-size: 0.98em; background: transparent; width: 100%; }
 
 /* ========== Header/Nav/Tool ========== */
-.oj-header {
-  width: 100%; min-height: 58px; background: var(--oj-card); border-bottom: 1px solid var(--oj-border);
-  display: flex; align-items: center; justify-content: space-between; padding: 0 40px; box-sizing: border-box; z-index: 30; position: relative;
-  transition: background .2s, border-color .2s;
-}
-.oj-header .oj-logo { font-weight: bold; font-size: 1.35em; color: var(--oj-primary); letter-spacing: 0.01em; text-decoration: none; display: flex; align-items: center; gap: 8px;}
-.oj-header .oj-nav { display: flex; align-items: center; gap: 22px; }
-.oj-header .oj-nav a { color: var(--oj-text); text-decoration: none; font-weight: 500; padding: 4px 14px; border-radius: 8px; transition: background .13s;}
-.oj-header .oj-nav a:hover, .oj-header .oj-nav a.active { background: var(--oj-primary); color: var(--oj-primary-contrast);}
-.oj-header .oj-tool { display: flex; align-items: center; gap: 14px; margin-left: 22px;}
+.oj-header{width:100%;min-height:58px;background:var(--oj-card);border-bottom:1px solid var(--oj-border);justify-content:space-between;padding:0 48px;box-sizing:border-box;z-index:30;position:relative}.oj-header,.oj-header .oj-logo{display:flex;align-items:center}.oj-header .oj-logo{font-size:1.28em;gap:8px}.oj-header .oj-logo img{height:40px;width:auto;margin-right:8px;display:block}.oj-header .oj-nav{display:flex;align-items:center;gap:22px}.oj-header .oj-nav a{color:var(--oj-text);text-decoration:none;font-weight:500;padding:4px 14px;border-radius:8px;transition:background .13s}.oj-header .oj-nav a.active,.oj-header .oj-nav a:hover{background:var(--oj-primary);color:var(--oj-primary-contrast)}.oj-header .oj-tool{display:flex;align-items:center;gap:16px;margin-left:24px}
 .oj-tool .oj-theme-btn, .oj-tool .oj-lang-btn {
   background: transparent; border: none; font-size: 1.18em; padding: 5px 13px; border-radius: 10px;
   cursor: pointer; color: var(--oj-primary); transition: background 0.15s, color 0.13s;
