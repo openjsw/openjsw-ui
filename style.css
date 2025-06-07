@@ -234,10 +234,3 @@ html.oj-theme-dark, body.oj-theme-dark {
 .oj-theme-dark .oj-alert.oj-alert-warning { background: #373116; color: #ffda6e; border-color: #ffbf2f;}
 .oj-theme-dark pre, .oj-theme-dark code { background: var(--oj-code-bg) !important; color: var(--oj-code-color) !important;}
 .oj-theme-dark .oj-footer { background: transparent; color: var(--oj-muted); border-top: 1px solid var(--oj-border);}
-
-.oj-container, .oj-card {
-  min-width: 0 !important;
-  width: 100% !important;
-  max-width: 1200px !important;
-  box-sizing: border-box !important;
-}
