@@ -1,4 +1,4 @@
-// openjsw v1.0 comment.js / common.js
+// openjsw v1.0 common.js
 
 // DOM Ready
 function ojReady(fn) {
@@ -123,6 +123,7 @@ function applyTheme(mode) {
   }
   updateThemeBtn(mode);
 }
+
 
 // 主题按钮及自动切换
 ojReady(() => {
