@@ -1,142 +1,147 @@
-export async function onRequestGet({ request }) {
-  // 多语言支持（中英文，自动根据 ?lang= 或 Accept-Language）
-  const url = new URL(request.url);
-  let lang = url.searchParams.get('lang') || '';
-  if (!lang) {
-    const accept = request.headers.get('accept-language') || '';
-    lang = accept.startsWith('en') ? 'en' : 'zh';
-  }
-  if (!['zh', 'en'].includes(lang)) lang = 'zh';
-
-  // 文案
+export async function onRequest(context) {
+  // 简单多语言（可扩展）
+  const url = new URL(context.request.url);
+  const lang = url.searchParams.get('lang') === 'en' ? 'en' : 'zh';
   const dict = {
     zh: {
-      title: 'openjsw 样式库 v1.1 演示页面',
-      card1: '卡片组件演示',
-      card2: '交互按钮演示',
-      card3: '代码块演示',
-      button: '主要按钮',
-      copy: '复制',
-      switchTheme: '切换主题',
-      switchLang: 'English',
+      title: 'openjsw 样式库 v1.2 演示页面',
       desc: '本页面演示 openjsw 统一样式库的响应式卡片、主题切换、代码块样式、移动端菜单等 UI 能力。',
+      card1: '卡片组件演示',
+      card1desc: '适用于内容区、提示、保护等常见场景。',
+      card2: '交互按钮演示',
+      btnMain: '主要按钮',
+      btnCopy: '复制',
+      card3: '代码块演示',
+      codeDemo: '/* CSS 代码高亮演示 */\n.oj-btn {\n  background: var(--oj-primary);\n  color: var(--oj-primary-contrast);\n}',
+      card4: '主题/语言切换',
+      card4desc: '点击右上角图标可切换亮/暗色和语言。',
+      footer: '© 2024 openjsw  |  ',
+      github: 'GitHub',
     },
     en: {
-      title: 'openjsw style v1.1 Demo',
-      card1: 'Card Component Demo',
-      card2: 'Interactive Button Demo',
+      title: 'openjsw Style v1.2 Demo',
+      desc: 'This page demonstrates the responsive card, theme switcher, code highlight, and mobile menu features of openjsw style library.',
+      card1: 'Card Demo',
+      card1desc: 'Used for content area, tips, protection and other common scenarios.',
+      card2: 'Button Demo',
+      btnMain: 'Main Button',
+      btnCopy: 'Copy',
       card3: 'Code Block Demo',
-      button: 'Primary Button',
-      copy: 'Copy',
-      switchTheme: 'Switch Theme',
-      switchLang: '简体中文',
-      desc: 'This page demonstrates openjsw unified style library: responsive card, theme switcher, code style, mobile menu and more.',
-    },
+      codeDemo: '/* CSS highlight demo */\n.oj-btn {\n  background: var(--oj-primary);\n  color: var(--oj-primary-contrast);\n}',
+      card4: 'Theme/Language Switch',
+      card4desc: 'Use the icon at top right to switch theme and language.',
+      footer: '© 2024 openjsw  |  ',
+      github: 'GitHub',
+    }
   }[lang];
 
-  // HTML 页面输出
-  return new Response(/*html*/`
-<!DOCTYPE html>
+  return new Response(`<!DOCTYPE html>
 <html lang="${lang}">
 <head>
   <meta charset="UTF-8">
-  <title>${dict.title}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="openjsw 样式库演示页面">
+  <title>${dict.title}</title>
   <link rel="stylesheet" href="https://styl.openjsw.net/style.css">
 </head>
 <body>
   <div class="oj-root">
-    <!-- 顶部导航 -->
     <header class="oj-header">
-      <a class="oj-logo" href="#"><img src="https://styl.openjsw.net/logo.svg" alt="logo">openjsw-ui</a>
+      <a class="oj-logo" href="/">
+        <img src="https://styl.openjsw.net/logo.svg" alt="logo">
+        <span>openjsw-ui</span>
+      </a>
       <nav class="oj-nav">
         <a href="#" class="active">${dict.title}</a>
       </nav>
       <div class="oj-tool">
-        <!-- 主题切换按钮 -->
-        <button id="oj-theme-toggle" class="oj-theme-btn" title="${dict.switchTheme}">
-          <span id="oj-theme-icon">🖥️</span>
-        </button>
-        <!-- 语言切换（带图标） -->
-        <a class="oj-lang-btn" href="?lang=zh" title="简体中文" aria-label="简体中文">
-          <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/cn.svg" style="width:1.1em;vertical-align:middle;"> 简
-        </a>
-        <a class="oj-lang-btn" href="?lang=en" title="English" aria-label="English">
-          <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/gb.svg" style="width:1.1em;vertical-align:middle;"> EN
-        </a>
+        <div class="oj-theme-switcher">
+          <button id="oj-theme-toggle" class="oj-theme-btn" aria-label="切换主题">
+            <svg id="oj-theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.66 17.66l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="oj-lang-switcher">
+          <button class="oj-lang-btn" aria-label="切换语言">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" fill="#eee"/><rect x="2" y="4" width="20" height="8" fill="#008751"/></svg>
+            ${lang === 'zh' ? '简' : 'EN'}
+          </button>
+        </div>
       </div>
-      <!-- 移动端菜单按钮 -->
-      <button id="oj-menu-btn" class="oj-menu-btn" aria-label="菜单" title="菜单">☰</button>
+      <button class="oj-menu-btn" id="oj-menu-btn" aria-label="菜单">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
     </header>
-    <!-- 移动端菜单 -->
-    <div id="oj-mobile-menu" class="oj-mobile-menu">
-      <nav class="oj-nav">
+    <nav class="oj-mobile-menu" id="oj-mobile-menu">
+      <div class="oj-nav">
         <a href="#" class="active">${dict.title}</a>
-      </nav>
-      <div class="oj-tool">
-        <button id="oj-theme-toggle-m" class="oj-theme-btn"><span id="oj-theme-icon-m">🖥️</span>${dict.switchTheme}</button>
-        <a class="oj-lang-btn" href="?lang=zh">
-          <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/cn.svg" style="width:1.1em;vertical-align:middle;"> 简
-        </a>
-        <a class="oj-lang-btn" href="?lang=en">
-          <img src="https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/gb.svg" style="width:1.1em;vertical-align:middle;"> EN
-        </a>
       </div>
-    </div>
-    <div id="oj-mobile-mask" class="oj-mobile-mask"></div>
+      <div class="oj-tool">
+        <div class="oj-theme-switcher">
+          <button id="oj-theme-toggle-mobile" class="oj-theme-btn" aria-label="切换主题">
+            <svg id="oj-theme-icon-mobile" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M17.66 17.66l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M17.66 6.34l1.42-1.42" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+        <div class="oj-lang-switcher">
+          <button class="oj-lang-btn" aria-label="切换语言">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" fill="#eee"/><rect x="2" y="4" width="20" height="8" fill="#008751"/></svg>
+            ${lang === 'zh' ? '简' : 'EN'}
+          </button>
+        </div>
+      </div>
+    </nav>
+    <div class="oj-mobile-mask" id="oj-mobile-mask"></div>
 
     <main class="oj-container">
-      <h1 class="oj-title" style="margin-top:22px">${dict.title}</h1>
-      <p class="oj-muted" style="margin-bottom:32px">${dict.desc}</p>
-      <div class="oj-demo-grid">
-        <!-- 卡片演示 -->
-        <section class="oj-card">
-          <div class="oj-title" style="font-size:1.22em;margin-bottom:.8em">${dict.card1}</div>
-          <div class="oj-muted">${lang==='zh'?'适用于内容区、提示、保护等常见场景。':'For content, notifications, info, etc.'}</div>
-        </section>
-        <!-- 按钮演示 -->
-        <section class="oj-card">
-          <div class="oj-title" style="font-size:1.18em;margin-bottom:.7em">${dict.card2}</div>
-          <button class="oj-btn" style="margin-right:10px;">${dict.button}</button>
-          <button class="oj-btn oj-copy" data-copy="openjsw rocks!">${dict.copy}</button>
-        </section>
-        <!-- 代码块演示 -->
-        <section class="oj-card">
-          <div class="oj-title" style="font-size:1.16em;margin-bottom:.7em">${dict.card3}</div>
-<pre><code>/* CSS 代码高亮演示 */
-.oj-btn {
-  background: var(--oj-primary);
-  color: var(--oj-primary-contrast);
-}
-</code></pre>
-        </section>
+      <h1 class="oj-title">${dict.title}</h1>
+      <div class="oj-muted" style="margin-bottom:18px;">${dict.desc}</div>
+
+      <div class="oj-card">
+        <h2 style="margin-top:0">${dict.card1}</h2>
+        <div class="oj-muted">${dict.card1desc}</div>
+      </div>
+      <div class="oj-card">
+        <h2 style="margin-top:0">${dict.card2}</h2>
+        <button class="oj-btn">${dict.btnMain}</button>
+        <button class="oj-btn oj-copy" data-copy="openjsw">${dict.btnCopy}</button>
+      </div>
+      <div class="oj-card">
+        <h2 style="margin-top:0">${dict.card3}</h2>
+        <pre><code>${dict.codeDemo}</code></pre>
+      </div>
+      <div class="oj-card">
+        <h2 style="margin-top:0">${dict.card4}</h2>
+        <div class="oj-muted">${dict.card4desc}</div>
       </div>
     </main>
     <footer class="oj-footer">
-      &copy; 2024 openjsw &nbsp; | &nbsp; <a href="https://github.com/openjsw" target="_blank" style="color:inherit;">GitHub</a>
+      ${dict.footer}<a href="https://github.com/openjsw/openjsw-ui" target="_blank">${dict.github}</a>
     </footer>
   </div>
-  <!-- 引用公共脚本 -->
   <script src="https://styl.openjsw.net/common.js"></script>
   <script>
-    // 移动端菜单里的主题切换与主按钮同步
-    ojReady(()=>{
-      let mBtn = document.getElementById('oj-theme-toggle-m');
-      let iconM = document.getElementById('oj-theme-icon-m');
-      if(mBtn && iconM){
-        mBtn.onclick = () => {
-          let now = localStorage.getItem('oj-theme') || 'auto';
-          let next = ['light','dark','auto'][(["light","dark","auto"].indexOf(now)+1)%3];
-          localStorage.setItem('oj-theme',next==='auto'?'':next);
-          ojReady(()=>{ window.location.reload(); });
-        }
-      }
+    // 语言切换逻辑（自动切换页面参数）
+    document.querySelectorAll('.oj-lang-btn').forEach(btn=>{
+      btn.onclick = () => {
+        var newlang = document.documentElement.lang === 'en' ? 'zh' : 'en';
+        location.search = '?lang=' + newlang;
+      };
+    });
+    // 主题切换（icon双同步，可选增强）
+    function syncThemeIcon(){
+      var iconMap = { light:'☀️', dark:'🌙', auto:'🖥️'};
+      var theme = localStorage.getItem('oj-theme')||'auto';
+      document.querySelectorAll('#oj-theme-icon,#oj-theme-icon-mobile').forEach(e=>{
+        e.textContent = iconMap[theme]||'🖥️';
+      });
+    }
+    ojReady(syncThemeIcon);
+    document.querySelectorAll('#oj-theme-toggle,#oj-theme-toggle-mobile').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        setTimeout(syncThemeIcon,150);
+      });
     });
   </script>
 </body>
-</html>
-  `, {
-    headers: { "content-type": "text/html; charset=UTF-8" }
+</html>`, {
+    headers: { 'content-type': 'text/html; charset=UTF-8' }
   });
 }
