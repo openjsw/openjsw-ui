@@ -275,6 +275,63 @@ body {
 .oj-theme-dark .oj-select {
   border: 1.5px solid var(--oj-border);
 }
+.oj-header {
+  width: 100%;
+  min-height: 54px;
+  background: var(--oj-card);
+  border-bottom: 1px solid var(--oj-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 20;
+  transition: background .2s, border-color .2s;
+}
+.oj-header .oj-logo {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: var(--oj-primary);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  display: flex; align-items: center;
+  gap: 8px;
+}
+.oj-header .oj-nav {
+  display: flex; align-items: center; gap: 18px;
+}
+.oj-header .oj-nav a {
+  color: var(--oj-text);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 6px;
+  transition: background .13s;
+}
+.oj-header .oj-nav a:hover,
+.oj-header .oj-nav a.active {
+  background: var(--oj-primary);
+  color: var(--oj-primary-contrast);
+}
+.oj-header .oj-right {
+  display: flex; align-items: center; gap: 12px;
+}
 
+/* 响应式适配 */
+@media (max-width: 700px) {
+  .oj-header { padding: 0 8vw; min-height: 46px;}
+  .oj-header .oj-logo { font-size: 1.1em;}
+  .oj-header .oj-nav { gap: 8px;}
+}
+@media (max-width: 480px) {
+  .oj-header { flex-direction: column; align-items: stretch; gap:0; padding:0 2vw;}
+  .oj-header .oj-right { justify-content: flex-end; }
+}
+
+.oj-theme-dark .oj-header {
+  background: #232735;
+  border-bottom: 1px solid var(--oj-border);
+}
 /* 可选：自定义主题，直接在 :root 或 body 添加新变量覆盖即可 */
 
