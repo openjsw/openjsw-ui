@@ -68,13 +68,13 @@ pre { margin: 8px 0 0 0; }
 
   <div class="oj-card demo-section">
     <div class="demo-label">输入框/选择框（Input/Select）</div>
-    <input class="oj-input" placeholder="请输入内容">
+    <input class="oj-input" name="demo-input" placeholder="请输入内容">
     <select class="oj-select">
       <option>请选择</option>
       <option>选项 A</option>
       <option>选项 B</option>
     </select>
-    <pre><code>&lt;input class="oj-input" placeholder="请输入内容"&gt;
+    <pre><code>&lt;input class="oj-input" name="demo-input" placeholder="请输入内容"&gt;
 &lt;select class="oj-select"&gt;...&lt;/select&gt;</code></pre>
   </div>
 
