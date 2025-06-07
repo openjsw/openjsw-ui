@@ -64,7 +64,7 @@ export async function onRequestGet(context) {
 <body>
 <div class="oj-header">
   <a href="/" class="oj-logo" aria-label="openjsw UI 首页">
-    <img src="https://cdn.jsdelivr.net/gh/openjsw/openjsw-ui/logo.svg" alt="logo" />
+    <img src="/logo.svg" alt="logo" />
     <span id="oj-title">openjsw UI</span>
   </a>
   <nav class="oj-nav" aria-label="主导航">
