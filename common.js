@@ -1,4 +1,4 @@
-// openjsw v1.0 common.js
+// openjsw v1.2 common.js
 
 // DOM Ready
 function ojReady(fn) {
@@ -6,7 +6,7 @@ function ojReady(fn) {
   else document.addEventListener('DOMContentLoaded', fn);
 }
 
-// 基础 toast
+// 简易 toast
 function ojToast(msg, timeout = 2200) {
   let toast = document.createElement('div');
   toast.className = 'oj-toast';
@@ -48,9 +48,7 @@ function ojCopy(text) {
   }
 }
 
-// oj-icon自动适配亮暗色（可选，SVG使用currentColor即可自动跟随主题色）
-
-// 移动端菜单弹窗支持
+// 移动端菜单弹窗
 function ojOpenMenu() {
   document.getElementById('oj-mobile-menu').classList.add('active');
   document.getElementById('oj-mobile-mask').style.display = 'block';
@@ -66,33 +64,14 @@ function ojToggleMenu() {
   if (menu.classList.contains('active')) ojCloseMenu();
   else ojOpenMenu();
 }
-ojReady(() => {
-  // 菜单按钮/遮罩点击关闭
-  let btn = document.getElementById('oj-menu-btn');
-  let mask = document.getElementById('oj-mobile-mask');
-  if (btn) btn.onclick = ojToggleMenu;
-  if (mask) mask.onclick = ojCloseMenu;
-  // esc 关闭
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') ojCloseMenu();
-  });
-});
 
-// 导出全局
-window.ojReady = ojReady;
-window.ojToast = ojToast;
-window.ojCopy = ojCopy;
-
-// oj-copy
-ojReady(() => {
-  document.querySelectorAll('.oj-copy[data-copy]').forEach(btn => {
-    btn.addEventListener('click', () => ojCopy(btn.getAttribute('data-copy')));
-  });
-});
-
-// 主题顺序
-const THEME_SEQ = ['light', 'dark', 'auto'];
-const THEME_ICONS = { light: '☀️', dark: '🌙', auto: '🖥️' };
+// 主题切换
+const THEME_SEQ = ['auto', 'light', 'dark'];
+const THEME_ICONS = {
+  auto: '/svg/color.svg',
+  light: '/svg/sun.svg',
+  dark:  '/svg/moon.svg'
+};
 
 function getNextTheme(cur) {
   const idx = THEME_SEQ.indexOf(cur);
@@ -100,12 +79,13 @@ function getNextTheme(cur) {
 }
 function updateThemeBtn(theme) {
   const icon = document.getElementById('oj-theme-icon');
-  if (icon) icon.textContent = THEME_ICONS[theme];
+  if (icon && THEME_ICONS[theme]) {
+    icon.src = THEME_ICONS[theme];
+    icon.alt = theme;
+  }
 }
-// 应用主题
 function applyTheme(mode) {
-  const body = document.body;
-  const html = document.documentElement;
+  const body = document.body, html = document.documentElement;
   body.classList.remove('oj-theme-dark');
   html.classList.remove('oj-theme-dark');
   if (mode === 'dark') {
@@ -124,11 +104,29 @@ function applyTheme(mode) {
   updateThemeBtn(mode);
 }
 
+// 语言切换按钮高亮
+function updateLangBtns() {
+  let curLang = (document.documentElement.lang || '').toLowerCase();
+  document.querySelectorAll('.oj-lang-btn').forEach(btn => {
+    btn.classList.remove('selected');
+    let btnLang = (btn.dataset.lang || '').toLowerCase();
+    if (curLang && btnLang && curLang.startsWith(btnLang)) btn.classList.add('selected');
+  });
+}
 
-// 主题按钮及自动切换
+// 事件绑定
 ojReady(() => {
+  // 菜单按钮/遮罩
+  let btn = document.getElementById('oj-menu-btn');
+  let mask = document.getElementById('oj-mobile-mask');
+  if (btn) btn.onclick = ojToggleMenu;
+  if (mask) mask.onclick = ojCloseMenu;
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') ojCloseMenu(); });
+
+  // 主题切换
   let theme = localStorage.getItem('oj-theme') || 'auto';
   applyTheme(theme);
+
   let themeBtn = document.getElementById('oj-theme-toggle');
   if (themeBtn) {
     themeBtn.onclick = () => {
@@ -137,19 +135,24 @@ ojReady(() => {
       applyTheme(next);
     };
   }
-  // 系统主题变化自动跟随
+  // 跟随系统
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if(!localStorage.getItem('oj-theme')) applyTheme('auto');
   });
-});
 
-// 语言切换按钮自适应选中态（若有多语言按钮，自动高亮）
-ojReady(() => {
-  let curLang = (document.documentElement.lang || '').toLowerCase();
-  document.querySelectorAll('.oj-lang-btn').forEach(btn => {
-    let btnLang = (btn.textContent || btn.innerText || '').toLowerCase();
-    if (btnLang.includes('en') && curLang.startsWith('en')) btn.classList.add('selected');
-    if (btnLang.includes('简') && curLang.startsWith('zh')) btn.classList.add('selected');
+  // 语言高亮
+  updateLangBtns();
+
+  // oj-copy
+  document.querySelectorAll('.oj-copy[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => ojCopy(btn.getAttribute('data-copy')));
   });
 });
 
+// 导出
+window.ojReady = ojReady;
+window.ojToast = ojToast;
+window.ojCopy = ojCopy;
+window.ojOpenMenu = ojOpenMenu;
+window.ojCloseMenu = ojCloseMenu;
+window.applyTheme = applyTheme;
