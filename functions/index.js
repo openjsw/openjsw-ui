@@ -1,175 +1,126 @@
-export async function onRequestGet(context) {
-  const url = new URL(context.request.url);
-  // 多语言支持
-  const lang = url.searchParams.get('lang') === 'en' ? 'en' : 'zh';
-  const i18n = {
-    zh: {
-      title: "openjsw 样式库演示",
-      navHome: "首页",
-      navProject: "项目",
-      theme: "主题切换演示",
-      btnDemo: "按钮演示",
-      copyDemo: "复制演示",
-      cardDemo: "卡片演示",
-      copyText: "点我复制",
-      copied: "已复制到剪贴板！",
-      desc: "openjsw-ui 现代样式/组件演示。支持主题切换、无障碍、SVG图标、响应式等特性。",
-      github: "https://github.com/openjsw/openjsw-ui"
-    },
-    en: {
-      title: "openjsw Style Demo",
-      navHome: "Home",
-      navProject: "GitHub",
-      theme: "Theme Switcher Demo",
-      btnDemo: "Button Demo",
-      copyDemo: "Copy Demo",
-      cardDemo: "Card Demo",
-      copyText: "Copy Me",
-      copied: "Copied to clipboard!",
-      desc: "openjsw-ui modern CSS/component demo. Supports theme switch, a11y, SVG icon, responsive design, and more.",
-      github: "https://github.com/openjsw/openjsw-ui"
-    }
-  }[lang];
+// functions/index.js
+// 动态输出演示&教学页，不依赖第三库
 
-  return new Response(`<!DOCTYPE html>
-<html lang="${lang}">
+module.exports = async function (req, res) {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.end(`
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <title>openjsw 开放技术网 - 通用组件库 V0.1 演示与教学</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${i18n.title}</title>
-  <meta name="description" content="${i18n.desc}">
-  <link rel="stylesheet" href="https://styl.openjsw.net/style.css">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    pre {background:#f6f8fa;border-radius:6px;padding:16px;overflow:auto;}
+    code {font-family:Consolas,Monaco,monospace;}
+    .oj-demo-block {margin-bottom:32px;}
+    .oj-demo-title {font-size:1.18rem;color:#2961ef;margin-bottom:8px;}
+    .oj-demo-desc {color:#888;margin-bottom:8px;}
+  </style>
 </head>
 <body>
-<div class="oj-root">
-  <header class="oj-header">
-    <a class="oj-logo" href="/">
-      <img src="https://styl.openjsw.net/logo.svg" alt="logo" height="32" style="margin-right:7px;">openjsw-ui
-    </a>
-    <div class="oj-header-right">
-      <nav class="oj-nav">
-        <a href="/">${i18n.navHome}</a>
-        <a href="${i18n.github}" target="_blank" rel="noopener">${i18n.navProject}</a>
-      </nav>
-      <div class="oj-tool">
-        <button id="oj-theme-toggle" class="oj-theme-btn" aria-label="切换主题">
-          <img id="oj-theme-icon" src="/svg/color.svg" width="20" height="20" alt="theme">
-        </button>
-        <button class="oj-lang-btn" data-lang="zh">中</button>
-        <button class="oj-lang-btn" data-lang="en">EN</button>
-      </div>
+  <div class="oj-container">
+    <div class="oj-title">openjsw 通用组件库 V0.1<br>演示与教学</div>
+    <div class="oj-subtitle">
+      所有交互均基于 <code>/style.css</code> + <code>/common.js</code>，无第三方依赖。
+      <br>你可以直接复制下方的用法到你的页面使用！
     </div>
-    <button id="oj-menu-btn" class="oj-menu-btn" aria-label="菜单">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect y="5" width="24" height="2" rx="1" fill="currentColor"/><rect y="11" width="24" height="2" rx="1" fill="currentColor"/><rect y="17" width="24" height="2" rx="1" fill="currentColor"/></svg>
-    </button>
-  </header>
+    
+    <!-- 消息提示演示 -->
+    <div class="oj-demo-block">
+      <div class="oj-demo-title">1. 消息提示（ojMsg）</div>
+      <div class="oj-demo-desc">弹出提示消息，支持不同类型（info/success/warning/danger）。</div>
+      <button class="oj-btn" onclick="openjsw.ojMsg('这是一条普通提示', 'info')">普通提示</button>
+      <button class="oj-btn oj-btn-success" onclick="openjsw.ojMsg('操作成功', 'success')">成功</button>
+      <button class="oj-btn oj-btn-warning" onclick="openjsw.ojMsg('有些警告', 'warning')">警告</button>
+      <button class="oj-btn oj-btn-danger" onclick="openjsw.ojMsg('出错了！', 'danger')">错误</button>
+      <pre><code>
+openjsw.ojMsg('消息内容', 'info');      // 普通
+openjsw.ojMsg('成功', 'success');
+openjsw.ojMsg('警告', 'warning');
+openjsw.ojMsg('错误', 'danger');
+      </code></pre>
+    </div>
 
-  <!-- 移动菜单 -->
-  <div id="oj-mobile-menu" class="oj-mobile-menu">
-    <nav class="oj-nav">
-      <a href="/">${i18n.navHome}</a>
-      <a href="${i18n.github}" target="_blank" rel="noopener">${i18n.navProject}</a>
-    </nav>
-    <div class="oj-tool" style="flex-direction:row;gap:10px;">
-      <button id="oj-theme-toggle-m" class="oj-theme-btn" aria-label="切换主题">
-        <img id="oj-theme-icon-m" src="/svg/color.svg" width="20" height="20" alt="theme">
-      </button>
-      <button class="oj-lang-btn" data-lang="zh">中</button>
-      <button class="oj-lang-btn" data-lang="en">EN</button>
+    <!-- 确认弹窗演示 -->
+    <div class="oj-demo-block">
+      <div class="oj-demo-title">2. 确认弹窗（ojConfirm）</div>
+      <div class="oj-demo-desc">弹出确认/取消弹窗，确定后执行回调。</div>
+      <button class="oj-btn oj-btn-primary" onclick="
+        openjsw.ojConfirm('确定要执行此操作吗？', function(yes) {
+          openjsw.ojMsg(yes ? '已确认' : '已取消', yes ? 'success' : 'warning');
+        });
+      ">弹出确认</button>
+      <pre><code>
+openjsw.ojConfirm('提示文字', function(yes){
+  if (yes) { /* 确定 */ }
+  else { /* 取消 */ }
+});
+      </code></pre>
+    </div>
+
+    <!-- 加载遮罩演示 -->
+    <div class="oj-demo-block">
+      <div class="oj-demo-title">3. 加载遮罩（ojLoading）</div>
+      <div class="oj-demo-desc">展示/关闭全屏加载中遮罩。</div>
+      <button class="oj-btn" onclick="openjsw.ojLoading(true)">显示加载</button>
+      <button class="oj-btn" onclick="openjsw.ojLoading(false)">隐藏加载</button>
+      <button class="oj-btn" onclick="openjsw.ojLoading(true);setTimeout(()=>openjsw.ojLoading(false), 1600)">演示1.6秒后关闭</button>
+      <pre><code>
+openjsw.ojLoading(true);           // 显示
+openjsw.ojLoading(false);          // 隐藏
+      </code></pre>
+    </div>
+
+    <!-- Tabs标签切换演示 -->
+    <div class="oj-demo-block">
+      <div class="oj-demo-title">4. 标签页Tabs（ojTabs）</div>
+      <div class="oj-demo-desc">一行代码实现内容切换。</div>
+      <div class="oj-tabs" id="tab-demo">
+        <div class="oj-tab active">Tab 1</div>
+        <div class="oj-tab">Tab 2</div>
+        <div class="oj-tab">Tab 3</div>
+      </div>
+      <div class="oj-tab-content" style="display:block">第一个tab内容</div>
+      <div class="oj-tab-content" style="display:none">第二个tab内容</div>
+      <div class="oj-tab-content" style="display:none">第三个tab内容</div>
+      <pre><code>
+&lt;div class="oj-tabs" id="tab-demo"&gt;
+  &lt;div class="oj-tab"&gt;Tab 1&lt;/div&gt;
+  &lt;div class="oj-tab"&gt;Tab 2&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="oj-tab-content"&gt;内容1&lt;/div&gt;
+&lt;div class="oj-tab-content"&gt;内容2&lt;/div&gt;
+&lt;script&gt; openjsw.ojTabs('#tab-demo'); &lt;/script&gt;
+      </code></pre>
+    </div>
+    <script>
+      // 初始化tab演示
+      window.onload = function () {
+        openjsw.ojTabs('#tab-demo');
+      }
+    </script>
+
+    <!-- 复制到剪贴板演示 -->
+    <div class="oj-demo-block">
+      <div class="oj-demo-title">5. 复制到剪贴板（ojCopy）</div>
+      <div class="oj-demo-desc">一行代码实现文本复制，并自动提示。</div>
+      <input class="oj-input" id="oj-copy-demo" style="width:200px" value="openjsw技术网" />
+      <button class="oj-btn" onclick="openjsw.ojCopy(document.getElementById('oj-copy-demo').value)">复制内容</button>
+      <pre><code>
+openjsw.ojCopy('需要复制的内容');
+      </code></pre>
+    </div>
+    
+    <hr>
+    <div style="color:#999;font-size:0.97rem;margin-top:24px;">
+      © 2024 openjsw.com 开放技术网 | 版本 V0.1<br>
+      组件库持续更新中，欢迎提出建议！
     </div>
   </div>
-  <div id="oj-mobile-mask" class="oj-mobile-mask"></div>
-
-  <main class="oj-container">
-    <h1>${i18n.title}</h1>
-    <p>${i18n.desc}</p>
-
-    <div class="oj-card">
-      <div class="oj-title">${i18n.theme}</div>
-      <div style="display:flex;align-items:center;gap:16px;">
-        <button id="oj-theme-toggle-demo" class="oj-theme-btn" aria-label="切换主题">
-          <img id="oj-theme-icon-demo" src="/svg/color.svg" width="24" height="24" alt="theme">
-        </button>
-        <span>点按钮循环切换 自动/亮色/暗色</span>
-      </div>
-      <pre><code>&lt;button id="oj-theme-toggle" class="oj-theme-btn"&gt;
-  &lt;img id="oj-theme-icon" src="/svg/color.svg" width="20"&gt;
-&lt;/button&gt;</code></pre>
-    </div>
-
-    <div class="oj-card">
-      <div class="oj-title">${i18n.btnDemo}</div>
-      <button class="oj-btn"><span class="oj-icon"><img src="/svg/sun.svg" width="20"></span>${lang === 'zh' ? '主按钮' : 'Primary'}</button>
-      <button class="oj-btn" disabled>${lang === 'zh' ? '禁用' : 'Disabled'}</button>
-      <pre><code>&lt;button class="oj-btn"&gt;按钮&lt;/button&gt;</code></pre>
-    </div>
-
-    <div class="oj-card">
-      <div class="oj-title">${i18n.copyDemo}</div>
-      <button class="oj-btn oj-copy" data-copy="openjsw-ui">${i18n.copyText}</button>
-      <pre><code>&lt;button class="oj-btn oj-copy" data-copy="openjsw-ui"&gt;${i18n.copyText}&lt;/button&gt;</code></pre>
-    </div>
-
-    <div class="oj-card">
-      <div class="oj-title">${i18n.cardDemo}</div>
-      <div>${lang === 'zh' ? '卡片用于承载主要内容或功能块，使用 <code>.oj-card</code>。' : 'Cards are used for main content blocks. Use <code>.oj-card</code>.'}</div>
-      <pre><code>&lt;div class="oj-card"&gt;内容&lt;/div&gt;</code></pre>
-    </div>
-  </main>
-
-  <footer class="oj-footer">
-    openjsw-ui &copy; 2024 | <a href="${i18n.github}" style="color:inherit;text-decoration:underline;" target="_blank">GitHub</a>
-  </footer>
-</div>
-<script src="https://styl.openjsw.net/common.js"></script>
-<script>
-  // 用于演示卡片内主题切换按钮：独立于全局
-  (function(){
-    const seq = ['auto', 'light', 'dark'];
-    const icons = {
-      auto: '/svg/color.svg',
-      light: '/svg/sun.svg',
-      dark:  '/svg/moon.svg'
-    };
-    let mode = localStorage.getItem('oj-theme') || 'auto';
-    const icon = document.getElementById('oj-theme-icon-demo');
-    function apply(mode) {
-      window.applyTheme(mode);
-      if(icon) icon.src = icons[mode];
-    }
-    document.getElementById('oj-theme-toggle-demo').onclick = function() {
-      const next = seq[(seq.indexOf(mode)+1)%seq.length];
-      mode = next;
-      apply(mode);
-    };
-    apply(mode);
-  })();
-
-  // 移动端菜单里的主题按钮同步主按钮
-  (function(){
-    const seq = ['auto', 'light', 'dark'];
-    const icons = {
-      auto: '/svg/color.svg',
-      light: '/svg/sun.svg',
-      dark:  '/svg/moon.svg'
-    };
-    let mode = localStorage.getItem('oj-theme') || 'auto';
-    const icon = document.getElementById('oj-theme-icon-m');
-    function apply(mode) {
-      window.applyTheme(mode);
-      if(icon) icon.src = icons[mode];
-    }
-    document.getElementById('oj-theme-toggle-m').onclick = function() {
-      const next = seq[(seq.indexOf(mode)+1)%seq.length];
-      mode = next;
-      apply(mode);
-    };
-    apply(mode);
-  })();
-</script>
+  <script src="/common.js"></script>
 </body>
 </html>
-  `, {
-    headers: { "content-type": "text/html; charset=UTF-8" }
-  });
-}
+`);
+};
