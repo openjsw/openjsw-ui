@@ -71,12 +71,10 @@ html, body { height: 100%; background: var(--oj-bg); color: var(--oj-text); font
   background: var(--oj-card); box-shadow: -2px 0 24px #0004; z-index: 99; padding: 18px 16px 0 16px; display: flex; flex-direction: column; gap: 22px;
   transform: translateX(110%); transition: transform 0.28s;
 }
-.oj-mobile-menu.active { transform: translateX(0);}
-.oj-mobile-menu .oj-nav, .oj-mobile-menu .oj-tool { display: flex; flex-direction: column; gap: 12px; }
-.oj-mobile-mask {
-  display:none; position:fixed; top:0;left:0;width:100vw;height:100vh;background:#0004;z-index:98;
-}
-.oj-mobile-menu.active ~ .oj-mobile-mask { display:block;}
+.oj-mobile-menu.active { transform: translateX(0); }
+.oj-mobile-mask { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0004; z-index: 98; }
+.oj-mobile-menu.active ~ .oj-mobile-mask { display: block; }
+
 
 /* ========== 卡片/保护卡/按钮/基础 ========== */
 .oj-card {
@@ -190,7 +188,10 @@ body, html { transition: background 0.3s; }
   --oj-code-bg: #22262e;
   --oj-code-color: #d5dae3;
 }
-.oj-theme-dark, .oj-theme-dark body, .oj-theme-dark html { background: var(--oj-bg) !important; color: var(--oj-text) !important;}
+.oj-theme-dark, .oj-theme-dark html, .oj-theme-dark body {
+  background: var(--oj-bg) !important;
+  color: var(--oj-text) !important;
+}
 .oj-theme-dark .oj-card, .oj-theme-dark .oj-protect-card, .oj-theme-dark .oj-table, .oj-theme-dark .oj-input, .oj-theme-dark .oj-select, .oj-theme-dark .oj-alert { background: var(--oj-card); color: var(--oj-text); border-color: var(--oj-border);}
 .oj-theme-dark .oj-btn, .oj-theme-dark .oj-tag.oj-tag-primary, .oj-theme-dark .oj-badge { background: var(--oj-primary); color: var(--oj-primary-contrast);}
 .oj-theme-dark .oj-tag.oj-tag-accent { background: var(--oj-accent); color: var(--oj-accent-contrast);}
