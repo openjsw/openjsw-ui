@@ -1,4 +1,4 @@
-// openjsw 通用脚本 v0.1
+// openjsw 通用脚本 v0.5
 
 // 简单 domReady
 function ojReady(fn) {
@@ -57,5 +57,52 @@ window.ojCopy = ojCopy;
 ojReady(function() {
   document.querySelectorAll('.oj-copy[data-copy]').forEach(btn => {
     btn.addEventListener('click', () => ojCopy(btn.getAttribute('data-copy')));
+  });
+});
+
+// 主题顺序：light → dark → auto → light...
+const THEME_SEQ = ['light', 'dark', 'auto'];
+const THEME_ICONS = { light: '☀️', dark: '🌙', auto: '🖥️' };
+
+function getNextTheme(cur) {
+  const idx = THEME_SEQ.indexOf(cur);
+  return THEME_SEQ[(idx + 1) % THEME_SEQ.length];
+}
+
+function updateThemeBtn(theme) {
+  document.getElementById('oj-theme-icon').textContent = THEME_ICONS[theme];
+}
+
+function applyTheme(mode) {
+  const body = document.body;
+  body.classList.remove('oj-theme-dark');
+  if (mode === 'dark') {
+    body.classList.add('oj-theme-dark');
+    localStorage.setItem('oj-theme', 'dark');
+  } else if (mode === 'light') {
+    localStorage.setItem('oj-theme', 'light');
+  } else {
+    localStorage.removeItem('oj-theme');
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      body.classList.add('oj-theme-dark');
+    }
+  }
+  updateThemeBtn(mode);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 读取上次
+  let theme = localStorage.getItem('oj-theme') || 'auto';
+  applyTheme(theme);
+  document.getElementById('oj-theme-toggle').onclick = () => {
+    let now = localStorage.getItem('oj-theme') || 'auto';
+    let next = getNextTheme(now);
+    applyTheme(next);
+  };
+  // 系统主题变化时 auto 跟随
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if(!localStorage.getItem('oj-theme')){
+      applyTheme('auto');
+    }
   });
 });
