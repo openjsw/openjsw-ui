@@ -6,60 +6,6 @@ export async function onRequestGet(context) {
   <title>openjsw UI v0.7 多主题/多语言 Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/style.css">
-  <style>
-    pre, code {
-      font-family: SFMono-Regular, Consolas, monospace;
-      background: #f4f7fa;
-      border-radius: 5px;
-      padding: 8px 12px;
-      color: #485169;
-      font-size: 0.97em;
-      white-space: pre-wrap;
-      word-break: break-all;
-      overflow-x: auto;
-      box-sizing: border-box;
-      line-height: 1.65;
-    }
-    pre { margin: 8px 0 0 0; max-width: 100%; }
-    .demo-label { margin-bottom:8px; font-weight:600; font-size:1.1em;}
-    .demo-section { margin-bottom:38px;}
-    .contrast-demo {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 0.6em;
-    }
-    .contrast-demo span {
-      display:inline-block; border-radius:8px; padding:6px 14px;
-      font-weight:600; font-size:1em;
-      margin-bottom:4px;
-    }
-    .contrast-primary { background: var(--oj-primary); color: var(--oj-primary-contrast);}
-    .contrast-accent  { background: var(--oj-accent); color: var(--oj-accent-contrast);}
-    .contrast-success { background: var(--oj-success); color: var(--oj-success-contrast);}
-    .contrast-error   { background: var(--oj-error); color: var(--oj-error-contrast);}
-    .contrast-warning { background: var(--oj-warning); color: var(--oj-warning-contrast);}
-    .oj-header .oj-logo img { height: 26px; margin-right: 8px; }
-    .oj-header .oj-logo { display: flex; align-items: center; gap: 6px;}
-    @media (max-width: 700px) {
-      .oj-header .oj-logo img { height: 22px;}
-    }
-    /* 强制深色 code 区覆盖（确保暗色下无白色） */
-    .oj-theme-dark pre, .oj-theme-dark code {
-      background: #22262e !important;
-      color: #d5dae3 !important;
-    }
-    body, html {
-      background: var(--oj-bg);
-      color: var(--oj-text);
-      transition: background 0.3s;
-    }
-   .oj-theme-dark, .oj-theme-dark body, .oj-theme-dark html {
-     background: var(--oj-bg) !important;
-     color: var(--oj-text) !important;
-   }
-
-  </style>
 </head>
 <body>
 <div class="oj-header">
