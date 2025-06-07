@@ -1,36 +1,33 @@
-export async function onRequest(context) {
+export async function onRequestGet(context) {
   const url = new URL(context.request.url);
+  // 多语言支持
   const lang = url.searchParams.get('lang') === 'en' ? 'en' : 'zh';
-  const dict = {
+  const i18n = {
     zh: {
-      title: 'openjsw 样式库 v1.2 演示页面',
-      desc: '本页面演示 openjsw 统一样式库的响应式卡片、主题切换、代码块样式、移动端菜单等 UI 能力。',
-      card1: '卡片组件演示',
-      card1desc: '适用于内容区、提示、保护等常见场景。',
-      card2: '交互按钮演示',
-      btnMain: '主要按钮',
-      btnCopy: '复制',
-      card3: '代码块演示',
-      codeDemo: '/* CSS 代码高亮演示 */\n.oj-btn {\n  background: var(--oj-primary);\n  color: var(--oj-primary-contrast);\n}',
-      card4: '主题/语言切换',
-      card4desc: '点击右上角图标可切换亮/暗色和语言。',
-      footer: '© 2024 openjsw  |  ',
-      github: 'GitHub',
+      title: "openjsw 样式库演示",
+      navHome: "首页",
+      navProject: "项目",
+      theme: "主题切换演示",
+      btnDemo: "按钮演示",
+      copyDemo: "复制演示",
+      cardDemo: "卡片演示",
+      copyText: "点我复制",
+      copied: "已复制到剪贴板！",
+      desc: "openjsw-ui 现代样式/组件演示。支持主题切换、无障碍、SVG图标、响应式等特性。",
+      github: "https://github.com/openjsw/openjsw-ui"
     },
     en: {
-      title: 'openjsw Style v1.2 Demo',
-      desc: 'This page demonstrates the responsive card, theme switcher, code highlight, and mobile menu features of openjsw style library.',
-      card1: 'Card Demo',
-      card1desc: 'Used for content area, tips, protection and other common scenarios.',
-      card2: 'Button Demo',
-      btnMain: 'Main Button',
-      btnCopy: 'Copy',
-      card3: 'Code Block Demo',
-      codeDemo: '/* CSS highlight demo */\n.oj-btn {\n  background: var(--oj-primary);\n  color: var(--oj-primary-contrast);\n}',
-      card4: 'Theme/Language Switch',
-      card4desc: 'Use the icon at top right to switch theme and language.',
-      footer: '© 2024 openjsw  |  ',
-      github: 'GitHub',
+      title: "openjsw Style Demo",
+      navHome: "Home",
+      navProject: "GitHub",
+      theme: "Theme Switcher Demo",
+      btnDemo: "Button Demo",
+      copyDemo: "Copy Demo",
+      cardDemo: "Card Demo",
+      copyText: "Copy Me",
+      copied: "Copied to clipboard!",
+      desc: "openjsw-ui modern CSS/component demo. Supports theme switch, a11y, SVG icon, responsive design, and more.",
+      github: "https://github.com/openjsw/openjsw-ui"
     }
   }[lang];
 
@@ -39,141 +36,140 @@ export async function onRequest(context) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>${dict.title}</title>
+  <title>${i18n.title}</title>
+  <meta name="description" content="${i18n.desc}">
   <link rel="stylesheet" href="https://styl.openjsw.net/style.css">
 </head>
 <body>
-  <div class="oj-root">
-    <header class="oj-header">
-      <a class="oj-logo" href="/">
-        <img src="https://styl.openjsw.net/logo.svg" alt="logo">
-        <span>openjsw-ui</span>
-      </a>
+<div class="oj-root">
+  <header class="oj-header">
+    <a class="oj-logo" href="/">
+      <img src="https://styl.openjsw.net/logo.svg" alt="logo" height="32" style="margin-right:7px;">openjsw-ui
+    </a>
+    <div class="oj-header-right">
       <nav class="oj-nav">
-        <a href="#" class="active">${dict.title}</a>
+        <a href="/">${i18n.navHome}</a>
+        <a href="${i18n.github}" target="_blank" rel="noopener">${i18n.navProject}</a>
       </nav>
       <div class="oj-tool">
         <button id="oj-theme-toggle" class="oj-theme-btn" aria-label="切换主题">
-          <img id="oj-theme-icon" src="/svg/color.svg" alt="主题" width="22" height="22" />
+          <img id="oj-theme-icon" src="/svg/color.svg" width="20" height="20" alt="theme">
         </button>
-        <button id="oj-lang-toggle" class="oj-lang-btn" aria-label="切换语言">
-          <img src="/svg/language.svg" alt="语言" width="22" height="22" />
-        </button>
+        <button class="oj-lang-btn" data-lang="zh">中</button>
+        <button class="oj-lang-btn" data-lang="en">EN</button>
       </div>
-      <button class="oj-menu-btn" id="oj-menu-btn" aria-label="菜单">
-        <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </header>
-    <nav class="oj-mobile-menu" id="oj-mobile-menu">
-      <div class="oj-nav">
-        <a href="#" class="active">${dict.title}</a>
-      </div>
-      <div class="oj-tool">
-        <button id="oj-theme-toggle-mobile" class="oj-theme-btn" aria-label="切换主题">
-          <img id="oj-theme-icon-mobile" src="/svg/color.svg" alt="主题" width="22" height="22" />
-        </button>
-        <button id="oj-lang-toggle-mobile" class="oj-lang-btn" aria-label="切换语言">
-          <img src="/svg/language.svg" alt="语言" width="22" height="22" />
-        </button>
-      </div>
+    </div>
+    <button id="oj-menu-btn" class="oj-menu-btn" aria-label="菜单">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect y="5" width="24" height="2" rx="1" fill="currentColor"/><rect y="11" width="24" height="2" rx="1" fill="currentColor"/><rect y="17" width="24" height="2" rx="1" fill="currentColor"/></svg>
+    </button>
+  </header>
+
+  <!-- 移动菜单 -->
+  <div id="oj-mobile-menu" class="oj-mobile-menu">
+    <nav class="oj-nav">
+      <a href="/">${i18n.navHome}</a>
+      <a href="${i18n.github}" target="_blank" rel="noopener">${i18n.navProject}</a>
     </nav>
-    <div class="oj-mobile-mask" id="oj-mobile-mask"></div>
-
-    <main class="oj-container">
-      <h1 class="oj-title">${dict.title}</h1>
-      <div class="oj-muted" style="margin-bottom:18px;">${dict.desc}</div>
-
-      <div class="oj-card">
-        <h2 style="margin-top:0">${dict.card1}</h2>
-        <div class="oj-muted">${dict.card1desc}</div>
-      </div>
-      <div class="oj-card">
-        <h2 style="margin-top:0">${dict.card2}</h2>
-        <button class="oj-btn">${dict.btnMain}</button>
-        <button class="oj-btn oj-copy" data-copy="openjsw">${dict.btnCopy}</button>
-      </div>
-      <div class="oj-card">
-        <h2 style="margin-top:0">${dict.card3}</h2>
-        <pre><code>${dict.codeDemo}</code></pre>
-      </div>
-      <div class="oj-card">
-        <h2 style="margin-top:0">${dict.card4}</h2>
-        <div class="oj-muted">${dict.card4desc}</div>
-      </div>
-    </main>
-    <footer class="oj-footer">
-      ${dict.footer}<a href="https://github.com/openjsw/openjsw-ui" target="_blank">${dict.github}</a>
-    </footer>
+    <div class="oj-tool" style="flex-direction:row;gap:10px;">
+      <button id="oj-theme-toggle-m" class="oj-theme-btn" aria-label="切换主题">
+        <img id="oj-theme-icon-m" src="/svg/color.svg" width="20" height="20" alt="theme">
+      </button>
+      <button class="oj-lang-btn" data-lang="zh">中</button>
+      <button class="oj-lang-btn" data-lang="en">EN</button>
+    </div>
   </div>
-  <script src="https://styl.openjsw.net/common.js"></script>
-  <script>
-    // 主题图标切换逻辑
-    const THEME_SVGS = {
-      light: '/svg/sun.svg',
-      dark: '/svg/moon.svg',
-      auto: '/svg/color.svg'
-    };
-    function updateThemeBtn(theme) {
-      document.querySelectorAll('#oj-theme-icon,#oj-theme-icon-mobile').forEach(icon=>{
-        icon.src = THEME_SVGS[theme] || THEME_SVGS.auto;
-      });
-    }
-    function getNextTheme(cur) {
-      const seq = ['light', 'dark', 'auto'];
-      const idx = seq.indexOf(cur);
-      return seq[(idx+1)%seq.length];
-    }
-    function getTheme() {
-      return localStorage.getItem('oj-theme') || 'auto';
-    }
-    function applyTheme(mode) {
-      const body = document.body;
-      const html = document.documentElement;
-      body.classList.remove('oj-theme-dark');
-      html.classList.remove('oj-theme-dark');
-      if (mode === 'dark') {
-        body.classList.add('oj-theme-dark');
-        html.classList.add('oj-theme-dark');
-        localStorage.setItem('oj-theme', 'dark');
-      } else if (mode === 'light') {
-        localStorage.setItem('oj-theme', 'light');
-      } else {
-        localStorage.removeItem('oj-theme');
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          body.classList.add('oj-theme-dark');
-          html.classList.add('oj-theme-dark');
-        }
-      }
-      updateThemeBtn(mode);
-    }
-    document.addEventListener('DOMContentLoaded', function(){
-      // 初始化主题
-      let theme = getTheme();
-      applyTheme(theme);
-      // 按钮切换主题
-      document.querySelectorAll('#oj-theme-toggle,#oj-theme-toggle-mobile').forEach(btn=>{
-        btn.onclick = ()=>{
-          let now = getTheme();
-          let next = getNextTheme(now);
-          applyTheme(next);
-        };
-      });
-      // 系统变色自动跟随
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if(!localStorage.getItem('oj-theme')) applyTheme('auto');
-      });
+  <div id="oj-mobile-mask" class="oj-mobile-mask"></div>
 
-      // 语言切换（跳转带参数）
-      document.querySelectorAll('#oj-lang-toggle,#oj-lang-toggle-mobile').forEach(btn=>{
-        btn.onclick = () => {
-          var newlang = document.documentElement.lang === 'en' ? 'zh' : 'en';
-          location.search = '?lang=' + newlang;
-        };
-      });
-    });
-  </script>
+  <main class="oj-container">
+    <h1>${i18n.title}</h1>
+    <p>${i18n.desc}</p>
+
+    <div class="oj-card">
+      <div class="oj-title">${i18n.theme}</div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button id="oj-theme-toggle-demo" class="oj-theme-btn" aria-label="切换主题">
+          <img id="oj-theme-icon-demo" src="/svg/color.svg" width="24" height="24" alt="theme">
+        </button>
+        <span>点按钮循环切换 自动/亮色/暗色</span>
+      </div>
+      <pre><code>&lt;button id="oj-theme-toggle" class="oj-theme-btn"&gt;
+  &lt;img id="oj-theme-icon" src="/svg/color.svg" width="20"&gt;
+&lt;/button&gt;</code></pre>
+    </div>
+
+    <div class="oj-card">
+      <div class="oj-title">${i18n.btnDemo}</div>
+      <button class="oj-btn"><span class="oj-icon"><img src="/svg/sun.svg" width="20"></span>${lang === 'zh' ? '主按钮' : 'Primary'}</button>
+      <button class="oj-btn" disabled>${lang === 'zh' ? '禁用' : 'Disabled'}</button>
+      <pre><code>&lt;button class="oj-btn"&gt;按钮&lt;/button&gt;</code></pre>
+    </div>
+
+    <div class="oj-card">
+      <div class="oj-title">${i18n.copyDemo}</div>
+      <button class="oj-btn oj-copy" data-copy="openjsw-ui">${i18n.copyText}</button>
+      <pre><code>&lt;button class="oj-btn oj-copy" data-copy="openjsw-ui"&gt;${i18n.copyText}&lt;/button&gt;</code></pre>
+    </div>
+
+    <div class="oj-card">
+      <div class="oj-title">${i18n.cardDemo}</div>
+      <div>${lang === 'zh' ? '卡片用于承载主要内容或功能块，使用 <code>.oj-card</code>。' : 'Cards are used for main content blocks. Use <code>.oj-card</code>.'}</div>
+      <pre><code>&lt;div class="oj-card"&gt;内容&lt;/div&gt;</code></pre>
+    </div>
+  </main>
+
+  <footer class="oj-footer">
+    openjsw-ui &copy; 2024 | <a href="${i18n.github}" style="color:inherit;text-decoration:underline;" target="_blank">GitHub</a>
+  </footer>
+</div>
+<script src="https://styl.openjsw.net/common.js"></script>
+<script>
+  // 用于演示卡片内主题切换按钮：独立于全局
+  (function(){
+    const seq = ['auto', 'light', 'dark'];
+    const icons = {
+      auto: '/svg/color.svg',
+      light: '/svg/sun.svg',
+      dark:  '/svg/moon.svg'
+    };
+    let mode = localStorage.getItem('oj-theme') || 'auto';
+    const icon = document.getElementById('oj-theme-icon-demo');
+    function apply(mode) {
+      window.applyTheme(mode);
+      if(icon) icon.src = icons[mode];
+    }
+    document.getElementById('oj-theme-toggle-demo').onclick = function() {
+      const next = seq[(seq.indexOf(mode)+1)%seq.length];
+      mode = next;
+      apply(mode);
+    };
+    apply(mode);
+  })();
+
+  // 移动端菜单里的主题按钮同步主按钮
+  (function(){
+    const seq = ['auto', 'light', 'dark'];
+    const icons = {
+      auto: '/svg/color.svg',
+      light: '/svg/sun.svg',
+      dark:  '/svg/moon.svg'
+    };
+    let mode = localStorage.getItem('oj-theme') || 'auto';
+    const icon = document.getElementById('oj-theme-icon-m');
+    function apply(mode) {
+      window.applyTheme(mode);
+      if(icon) icon.src = icons[mode];
+    }
+    document.getElementById('oj-theme-toggle-m').onclick = function() {
+      const next = seq[(seq.indexOf(mode)+1)%seq.length];
+      mode = next;
+      apply(mode);
+    };
+    apply(mode);
+  })();
+</script>
 </body>
-</html>`, {
-    headers: { 'content-type': 'text/html; charset=UTF-8' }
+</html>
+  `, {
+    headers: { "content-type": "text/html; charset=UTF-8" }
   });
 }
