@@ -403,3 +403,9 @@
   color: var(--oj-muted);
   border-top: 1px solid var(--oj-border);
 }
+/* v0.8: 全局暗色背景补丁 */
+.oj-theme-dark,
+.oj-theme-dark body,
+.oj-theme-dark html {
+  background: var(--oj-bg) !important;
+}
