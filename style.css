@@ -1,17 +1,30 @@
-/* openjsw 样式库 v0.1 */
-/* 命名空间 .oj- 开头，便于全局引用 */
+/* openjsw 样式库 v0.4 */
+/* 命名空间 .oj- 开头，便于全局引用，支持多主题/色板/无障碍 */
 
 :root {
+  /* 基础色板 */
   --oj-font-sans: 'Inter', 'Segoe UI', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   --oj-bg: #f7f9fa;
   --oj-card: #fff;
   --oj-primary: #0366d6;
+  --oj-primary-contrast: #fff;        /* 主色上的文本色 */
   --oj-accent: #47b881;
+  --oj-accent-contrast: #fff;
   --oj-border: #e4e7eb;
   --oj-text: #1a222c;
   --oj-muted: #6b7c93;
   --oj-radius: 12px;
   --oj-shadow: 0 2px 8px rgba(16,30,54,0.04);
+  /* 新增可定制色板 */
+  --oj-success: #27ae60;
+  --oj-success-bg: #e7f7e2;
+  --oj-success-contrast: #246b2a;
+  --oj-error: #d62828;
+  --oj-error-bg: #fff1f0;
+  --oj-error-contrast: #a82626;
+  --oj-warning: #ffbf2f;
+  --oj-warning-bg: #fffbe6;
+  --oj-warning-contrast: #826b18;
 }
 
 body {
@@ -44,17 +57,25 @@ body {
   display: inline-block;
   padding: 8px 20px;
   background: var(--oj-primary);
-  color: #fff;
+  color: var(--oj-primary-contrast);
   border-radius: 8px;
   border: none;
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, box-shadow 0.15s;
   text-decoration: none;
+  outline: none;
 }
-.oj-btn:hover { background: #0553aa; }
+.oj-btn:hover, .oj-btn:focus-visible {
+  background: #0553aa;
+  box-shadow: 0 0 0 3px #93c5fd66;
+}
+.oj-btn:focus-visible {
+  outline: 2px solid var(--oj-primary);
+  outline-offset: 2px;
+}
 
 .oj-title {
   font-size: 2rem;
@@ -81,14 +102,23 @@ body {
 .oj-input, .oj-select {
   padding: 8px 12px;
   border-radius: 6px;
-  border: 1px solid var(--oj-border);
+  border: 1.5px solid var(--oj-border);
   font-size: 1em;
   background: #fff;
   outline: none;
   margin-bottom: 10px;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  color: var(--oj-text);
 }
-.oj-input:focus, .oj-select:focus { border-color: var(--oj-primary); }
+.oj-input:focus-visible, .oj-select:focus-visible {
+  border-color: var(--oj-primary);
+  box-shadow: 0 0 0 3px #93c5fd66;
+}
+.oj-input:disabled, .oj-select:disabled {
+  background: #f0f1f3;
+  color: #b0b3b8;
+  cursor: not-allowed;
+}
 
 .oj-flex { display: flex; align-items: center; gap: 16px; }
 
@@ -106,7 +136,9 @@ body {
   .oj-container { margin: 24px auto 0; padding: 0 4vw; }
   .oj-card { padding: 12px; }
   .oj-title { font-size: 1.3rem; }
+  pre, code { font-size: 0.93em; }
 }
+
 .oj-alert {
   display: flex;
   align-items: center;
@@ -120,18 +152,18 @@ body {
   font-size: 1em;
 }
 .oj-alert.oj-alert-success {
-  background: #e7f7e2;
-  color: #246b2a;
+  background: var(--oj-success-bg);
+  color: var(--oj-success-contrast);
   border-color: #aadbaa;
 }
 .oj-alert.oj-alert-error {
-  background: #fff1f0;
-  color: #a82626;
+  background: var(--oj-error-bg);
+  color: var(--oj-error-contrast);
   border-color: #f1b8b8;
 }
 .oj-alert.oj-alert-warning {
-  background: #fffbe6;
-  color: #826b18;
+  background: var(--oj-warning-bg);
+  color: var(--oj-warning-contrast);
   border-color: #f2e4b3;
 }
 .oj-tag {
@@ -145,14 +177,20 @@ body {
   vertical-align: middle;
   line-height: 1.8;
 }
-.oj-tag.oj-tag-primary { background: var(--oj-primary); color: #fff; }
-.oj-tag.oj-tag-accent { background: var(--oj-accent); color: #fff; }
+.oj-tag.oj-tag-primary {
+  background: var(--oj-primary);
+  color: var(--oj-primary-contrast);
+}
+.oj-tag.oj-tag-accent {
+  background: var(--oj-accent);
+  color: var(--oj-accent-contrast);
+}
 .oj-badge {
   display: inline-block;
   min-width: 22px;
   padding: 2px 6px;
   background: var(--oj-primary);
-  color: #fff;
+  color: var(--oj-primary-contrast);
   border-radius: 12px;
   font-size: 0.87em;
   text-align: center;
@@ -190,3 +228,53 @@ body {
 @keyframes oj-spin {
   100% { transform: rotate(360deg);}
 }
+
+/* ============ 主题扩展 ============ */
+/* 暗色主题：通过 body.oj-theme-dark 或 html.oj-theme-dark 激活 */
+.oj-theme-dark, .oj-theme-dark body {
+  --oj-bg: #181c23;
+  --oj-card: #212532;
+  --oj-primary: #4a90e2;
+  --oj-primary-contrast: #fff;
+  --oj-accent: #42d392;
+  --oj-accent-contrast: #121818;
+  --oj-border: #2e3442;
+  --oj-text: #f3f6fb;
+  --oj-muted: #9ba4b4;
+  --oj-shadow: 0 2px 8px rgba(18, 25, 35, 0.19);
+  --oj-success-bg: #19322a;
+  --oj-success-contrast: #6ef2b0;
+  --oj-error-bg: #321d1b;
+  --oj-error-contrast: #ffadad;
+  --oj-warning-bg: #3a3219;
+  --oj-warning-contrast: #ffd570;
+}
+.oj-theme-dark .oj-card,
+.oj-theme-dark .oj-table,
+.oj-theme-dark .oj-input,
+.oj-theme-dark .oj-select,
+.oj-theme-dark .oj-alert {
+  background: var(--oj-card);
+  color: var(--oj-text);
+}
+.oj-theme-dark .oj-btn,
+.oj-theme-dark .oj-tag.oj-tag-primary,
+.oj-theme-dark .oj-badge {
+  background: var(--oj-primary);
+  color: var(--oj-primary-contrast);
+}
+.oj-theme-dark .oj-tag.oj-tag-accent {
+  background: var(--oj-accent);
+  color: var(--oj-accent-contrast);
+}
+.oj-theme-dark .oj-table th {
+  background: #232735;
+  color: var(--oj-muted);
+}
+.oj-theme-dark .oj-input,
+.oj-theme-dark .oj-select {
+  border: 1.5px solid var(--oj-border);
+}
+
+/* 可选：自定义主题，直接在 :root 或 body 添加新变量覆盖即可 */
+
