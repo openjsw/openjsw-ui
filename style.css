@@ -1,0 +1,109 @@
+/* openjsw 样式库 v0.1 */
+/* 命名空间 .oj- 开头，便于全局引用 */
+
+:root {
+  --oj-font-sans: 'Inter', 'Segoe UI', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  --oj-bg: #f7f9fa;
+  --oj-card: #fff;
+  --oj-primary: #0366d6;
+  --oj-accent: #47b881;
+  --oj-border: #e4e7eb;
+  --oj-text: #1a222c;
+  --oj-muted: #6b7c93;
+  --oj-radius: 12px;
+  --oj-shadow: 0 2px 8px rgba(16,30,54,0.04);
+}
+
+body {
+  font-family: var(--oj-font-sans);
+  background: var(--oj-bg);
+  color: var(--oj-text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+}
+
+.oj-container {
+  max-width: 960px;
+  margin: 40px auto 0;
+  padding: 0 16px;
+}
+
+.oj-card {
+  background: var(--oj-card);
+  border: 1px solid var(--oj-border);
+  border-radius: var(--oj-radius);
+  box-shadow: var(--oj-shadow);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: box-shadow 0.2s;
+}
+.oj-card:hover { box-shadow: 0 4px 24px rgba(16,30,54,0.08); }
+
+.oj-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  background: var(--oj-primary);
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+.oj-btn:hover { background: #0553aa; }
+
+.oj-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1em 0;
+  color: var(--oj-text);
+}
+.oj-muted {
+  color: var(--oj-muted);
+  font-size: 0.97em;
+}
+
+.oj-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.oj-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--oj-border);
+}
+.oj-list li:last-child { border-bottom: none; }
+
+.oj-input, .oj-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--oj-border);
+  font-size: 1em;
+  background: #fff;
+  outline: none;
+  margin-bottom: 10px;
+  transition: border-color 0.15s;
+}
+.oj-input:focus, .oj-select:focus { border-color: var(--oj-primary); }
+
+.oj-flex { display: flex; align-items: center; gap: 16px; }
+
+.oj-footer {
+  margin-top: 48px;
+  padding: 20px 0 12px;
+  border-top: 1px solid var(--oj-border);
+  text-align: center;
+  color: var(--oj-muted);
+  font-size: 0.98em;
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  .oj-container { margin: 24px auto 0; padding: 0 4vw; }
+  .oj-card { padding: 12px; }
+  .oj-title { font-size: 1.3rem; }
+}
