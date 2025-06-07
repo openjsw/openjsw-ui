@@ -75,9 +75,12 @@ function updateThemeBtn(theme) {
 
 function applyTheme(mode) {
   const body = document.body;
+  const html = document.documentElement;
   body.classList.remove('oj-theme-dark');
+  html.classList.remove('oj-theme-dark');
   if (mode === 'dark') {
     body.classList.add('oj-theme-dark');
+    html.classList.add('oj-theme-dark');
     localStorage.setItem('oj-theme', 'dark');
   } else if (mode === 'light') {
     localStorage.setItem('oj-theme', 'light');
@@ -85,10 +88,12 @@ function applyTheme(mode) {
     localStorage.removeItem('oj-theme');
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       body.classList.add('oj-theme-dark');
+      html.classList.add('oj-theme-dark');
     }
   }
   updateThemeBtn(mode);
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // 读取上次
