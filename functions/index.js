@@ -3,29 +3,24 @@ export async function onRequestGet(context) {
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>openjsw UI v0.6 多主题/多语言 Demo</title>
+  <title>openjsw UI v0.7 多主题/多语言 Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/style.css">
   <style>
-pre, code {
-  font-family: SFMono-Regular, Consolas, monospace;
-  background: #f4f7fa;
-  border-radius: 5px;
-  padding: 8px 12px;
-  color: #485169;
-  font-size: 0.97em;
-  white-space: pre-wrap;       /* 多行代码自动换行！ */
-  word-break: break-all;       /* 任意断字，避免超宽单词撑出 */
-  overflow-x: auto;            /* 横向滚动兜底 */
-  box-sizing: border-box;
-  line-height: 1.65;
-}
-pre {
-  margin: 8px 0 0 0;
-  overflow-x: auto;
-  /* 为了移动端友好，可以加如下最大宽度 */
-  max-width: 100%;
-}
+    pre, code {
+      font-family: SFMono-Regular, Consolas, monospace;
+      background: #f4f7fa;
+      border-radius: 5px;
+      padding: 8px 12px;
+      color: #485169;
+      font-size: 0.97em;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-x: auto;
+      box-sizing: border-box;
+      line-height: 1.65;
+    }
+    pre { margin: 8px 0 0 0; max-width: 100%; }
     .demo-label { margin-bottom:8px; font-weight:600; font-size:1.1em;}
     .demo-section { margin-bottom:38px;}
     .contrast-demo {
@@ -48,6 +43,11 @@ pre {
     .oj-header .oj-logo { display: flex; align-items: center; gap: 6px;}
     @media (max-width: 700px) {
       .oj-header .oj-logo img { height: 22px;}
+    }
+    /* 强制深色 code 区覆盖（确保暗色下无白色） */
+    .oj-theme-dark pre, .oj-theme-dark code {
+      background: #22262e !important;
+      color: #d5dae3 !important;
     }
   </style>
 </head>
@@ -74,9 +74,9 @@ pre {
 </div>
 <div class="oj-container">
   <div class="oj-card" style="margin-top:36px;">
-    <div class="oj-title" id="demo-title">openjsw UI v0.6 多主题/多语言/无障碍 Demo</div>
+    <div class="oj-title" id="demo-title">openjsw UI v0.7 多主题/多语言/无障碍 Demo</div>
     <div class="oj-muted" id="demo-desc" tabindex="0" aria-live="polite">
-      <span id="desc-header">本页演示 openjsw UI v0.6 样式库，包含全局 header（头部）、oj-nav（主导航）、oj-tool（右侧工具栏），支持主题/语言一键切换，所有组件无障碍与响应式自适应。</span>
+      <span id="desc-header">本页演示 openjsw UI v0.7 样式库，包含全局 header（头部）、oj-nav（主导航）、oj-tool（右侧工具栏），支持主题/语言一键切换，所有组件无障碍与响应式自适应。</span>
     </div>
   </div>
   <div class="oj-card demo-section" id="components">
@@ -162,7 +162,7 @@ pre {
     <pre><code>&lt;span class="oj-spinner"&gt;&lt;/span&gt;</code></pre>
   </div>
   <div class="oj-footer" style="margin-top:60px;">
-    &copy; 2024 openjsw 开放技术 | <span class="oj-muted" id="footer-note">v0.6 支持全局 header、响应式、主题/多语言切换与无障碍</span>
+    &copy; 2024 openjsw 开放技术 | <span class="oj-muted" id="footer-note">v0.7 暗色净化：无白色！支持多主题、多语言、响应式、无障碍</span>
   </div>
 </div>
 <script>
@@ -221,8 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const LANG_TEXT = {
     zh: {
       'oj-title': "openjsw UI",
-      'demo-title': "openjsw UI v0.6 多主题/多语言/无障碍 Demo",
-      'demo-desc': "本页演示 openjsw UI v0.6 样式库，包含全局 header（头部）、oj-nav（主导航）、oj-tool（右侧工具栏），支持主题/语言一键切换，所有组件无障碍与响应式自适应。",
+      'demo-title': "openjsw UI v0.7 多主题/多语言/无障碍 Demo",
+      'demo-desc': "本页演示 openjsw UI v0.7 样式库，包含全局 header（头部）、oj-nav（主导航）、oj-tool（右侧工具栏），支持主题/语言一键切换，所有组件无障碍与响应式自适应。",
       'nav-home': "首页", 'nav-github': "GitHub", 'nav-components': "组件",
       'label-theme': "主题色板对比（Theme Colors Contrast）",
       'theme-primary': "主色 Primary", 'theme-accent': "强调色 Accent", 'theme-success': "成功 Success",
@@ -240,12 +240,12 @@ document.addEventListener('DOMContentLoaded', () => {
       'label-table': "表格（Table）",
       'table-name': "姓名", 'table-role': "角色", 'table-progress': "进度",
       'label-spinner': "加载动画（Spinner）",
-      'footer-note': "v0.6 支持全局 header、响应式、主题/多语言切换与无障碍"
+      'footer-note': "v0.7 暗色净化：无白色！支持多主题、多语言、响应式、无障碍"
     },
     en: {
       'oj-title': "openjsw UI",
-      'demo-title': "openjsw UI v0.6 Multi-theme/Multi-language/A11y Demo",
-      'demo-desc': "This page demonstrates the openjsw UI v0.6 library, featuring a global header, oj-nav (main nav), oj-tool (top-right tools), instant theme/language switching, all components accessible and responsive.",
+      'demo-title': "openjsw UI v0.7 Multi-theme/Multi-language/A11y Demo",
+      'demo-desc': "This page demonstrates the openjsw UI v0.7 library, featuring a global header, oj-nav (main nav), oj-tool (top-right tools), instant theme/language switching, all components accessible and responsive.",
       'nav-home': "Home", 'nav-github': "GitHub", 'nav-components': "Components",
       'label-theme': "Theme Colors Contrast",
       'theme-primary': "Primary", 'theme-accent': "Accent", 'theme-success': "Success",
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'label-table': "Table",
       'table-name': "Name", 'table-role': "Role", 'table-progress': "Progress",
       'label-spinner': "Spinner",
-      'footer-note': "v0.6: header, responsive, theme/language switch, a11y support"
+      'footer-note': "v0.7: dark theme purified (no white!), multi-theme, multi-language, responsive, a11y"
     }
   };
   function setLang(lang) {
@@ -284,7 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setLang(next);
   };
 });
-/* 简易 Toast，仅演示按钮功能 */
+
+// 简易 Toast，仅演示按钮功能
 function ojToast(msg) {
   let el = document.createElement('div');
   el.textContent = msg;
