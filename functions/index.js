@@ -49,6 +49,16 @@ export async function onRequestGet(context) {
       background: #22262e !important;
       color: #d5dae3 !important;
     }
+    body, html {
+      background: var(--oj-bg);
+      color: var(--oj-text);
+      transition: background 0.3s;
+    }
+   .oj-theme-dark, .oj-theme-dark body, .oj-theme-dark html {
+     background: var(--oj-bg) !important;
+     color: var(--oj-text) !important;
+   }
+
   </style>
 </head>
 <body>
