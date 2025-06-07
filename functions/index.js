@@ -26,6 +26,33 @@ export async function onRequestGet(context) {
       </select>
       <button class="oj-btn">提交</button>
     </div>
+    <div class="oj-card">
+      <div class="oj-title" style="font-size:1.2rem;">提示框 Alert</div>
+      <div class="oj-alert">这是一个普通提示</div>
+      <div class="oj-alert oj-alert-success">操作成功！</div>
+      <div class="oj-alert oj-alert-error">发生错误！</div>
+      <div class="oj-alert oj-alert-warning">注意事项</div>
+      <div class="oj-muted" style="margin-top:12px;">
+    <b>用法：</b>
+   <pre><code>&lt;div class="oj-alert"&gt;普通提示&lt;/div&gt;
+&lt;div class="oj-alert oj-alert-success"&gt;操作成功&lt;/div&gt;
+&lt;div class="oj-alert oj-alert-error"&gt;出错了&lt;/div&gt;
+&lt;div class="oj-alert oj-alert-warning"&gt;警告&lt;/div&gt;</code></pre>
+  </div>
+  <div class="oj-card">
+  <div class="oj-title" style="font-size:1.2rem;">标签 Tag</div>
+  <span class="oj-tag">默认标签</span>
+  <span class="oj-tag oj-tag-primary">主要</span>
+  <span class="oj-tag oj-tag-accent">强调</span>
+  <div class="oj-muted" style="margin-top:12px;">
+    <b>用法：</b>
+    <pre><code>&lt;span class="oj-tag"&gt;默认标签&lt;/span&gt;
+&lt;span class="oj-tag oj-tag-primary"&gt;主要&lt;/span&gt;
+&lt;span class="oj-tag oj-tag-accent"&gt;强调&lt;/span&gt;</code></pre>
+  </div>
+</div>
+</div>
+
     <div class="oj-footer">
       &copy; 2024 openjsw 开放技术 | <span class="oj-muted">Made with ❤️ for OSS</span>
     </div>
