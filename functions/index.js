@@ -7,15 +7,17 @@ export async function onRequestGet(context) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/style.css">
   <style>
-    pre, code {
-      font-family: SFMono-Regular,Consolas,monospace;
-      background: #f4f7fa;
-      border-radius: 5px;
-      padding: 8px 12px;
-      color: #485169;
-      font-size: 0.97em;
-    }
-    pre { margin: 8px 0 0 0; }
+pre, code {
+  font-family: SFMono-Regular, Consolas, monospace;
+  background: #f4f7fa;
+  border-radius: 5px;
+  padding: 8px 12px;
+  color: #485169;
+  font-size: 0.97em;
+  white-space: pre-wrap;    /* 关键 */
+  word-break: break-all;    /* 关键 */
+}
+pre { margin: 8px 0 0 0; }
     .demo-label { margin-bottom:8px; font-weight:600; font-size:1.1em;}
     .demo-section { margin-bottom:38px;}
   </style>
