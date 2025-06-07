@@ -1,7 +1,6 @@
-/* openjsw 样式库 v1.1 | 2024 */
-/* 命名空间 .oj-，统一主题变量、支持暗色/亮色、自适应、无障碍、sticky footer、oj-icon体系 */
+/* openjsw 样式库 v1.2 | 2024 */
+/* 命名空间 .oj-，全局主题变量、暗色/亮色、响应式、无障碍、sticky footer、oj-icon、主题/语言切换下拉 */
 
-/* ========== 全局变量（亮色主题） ========== */
 :root {
   --oj-font-sans: 'Inter', 'Segoe UI', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   --oj-bg: #f7f9fa;
@@ -28,50 +27,127 @@
   --oj-code-color: #485169;
 }
 
-/* ========== Sticky 布局与基础结构 ========== */
+/* ========== Sticky 基础结构 ========== */
 html, body { height: 100%; background: var(--oj-bg); color: var(--oj-text); font-family: var(--oj-font-sans); margin: 0; padding: 0; box-sizing: border-box; }
 .oj-root { min-height: 100vh; display: flex; flex-direction: column; }
-.oj-container { flex: 1 0 auto; max-width: 1200px; margin: 40px auto 0; padding: 0 16px;}
 .oj-footer { flex-shrink: 0; margin-top: 48px; padding: 20px 0 12px; border-top: 1px solid var(--oj-border); text-align: center; color: var(--oj-muted); font-size: 0.98em; background: transparent; width: 100%; }
 
 /* ========== Header/Nav/Tool ========== */
-.oj-header{width:100%;min-height:58px;background:var(--oj-card);border-bottom:1px solid var(--oj-border);justify-content:space-between;padding:0 48px;box-sizing:border-box;z-index:30;position:relative}.oj-header,.oj-header .oj-logo{display:flex;align-items:center}.oj-header .oj-logo{font-size:1.28em;gap:8px}.oj-header .oj-logo img{height:40px;width:auto;margin-right:8px;display:block}.oj-header .oj-nav{display:flex;align-items:center;gap:22px}.oj-header .oj-nav a{color:var(--oj-text);text-decoration:none;font-weight:500;padding:4px 14px;border-radius:8px;transition:background .13s}.oj-header .oj-nav a.active,.oj-header .oj-nav a:hover{background:var(--oj-primary);color:var(--oj-primary-contrast)}.oj-header .oj-tool{display:flex;align-items:center;gap:16px;margin-left:24px}
-.oj-tool .oj-theme-btn, .oj-tool .oj-lang-btn {
-  background: transparent; border: none; font-size: 1.18em; padding: 5px 13px; border-radius: 10px;
-  cursor: pointer; color: var(--oj-primary); transition: background 0.15s, color 0.13s;
-  outline: none; display: flex; align-items: center; gap: 5px;
+.oj-header {
+  width: 100%;
+  min-height: 58px;
+  background: var(--oj-card);
+  border-bottom: 1px solid var(--oj-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  box-sizing: border-box;
+  z-index: 30;
+  position: relative;
 }
-.oj-tool .oj-theme-btn:focus-visible, .oj-tool .oj-lang-btn:focus-visible {
-  background: var(--oj-primary); color: var(--oj-primary-contrast); outline: 2px solid var(--oj-accent);
+.oj-header .oj-logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.28em;
+  font-weight: bold;
+  color: var(--oj-primary);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  gap: 8px;
 }
-.oj-tool .oj-theme-btn:hover, .oj-tool .oj-lang-btn:hover { background: #eaf4ff;}
-.oj-tool .oj-lang-btn.selected { background: var(--oj-accent); color: var(--oj-accent-contrast);}
-.oj-tool .oj-theme-btn[aria-pressed="true"] { background: var(--oj-primary); color: var(--oj-primary-contrast);}
-.oj-tool .oj-theme-btn:active, .oj-tool .oj-lang-btn:active { opacity: .85;}
+.oj-header .oj-logo img { height: 40px; margin-right: 9px; }
+.oj-header .oj-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-right: 40px; /* PC端nav和tool间距 */
+}
+.oj-header .oj-nav a {
+  color: var(--oj-text);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 8px;
+  transition: background .13s;
+}
+.oj-header .oj-nav a:hover, .oj-header .oj-nav a.active {
+  background: var(--oj-primary);
+  color: var(--oj-primary-contrast);
+}
+.oj-header .oj-tool {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
-/* 移动端汉堡菜单/抽屉 */
-.oj-menu-btn { display:none; background:none; border:none; font-size:1.48em; margin-left:18px; cursor:pointer; color:var(--oj-primary);}
+/* 主题/语言下拉切换样式 */
+.oj-theme-switcher, .oj-lang-switcher { position: relative; }
+.oj-theme-btn, .oj-lang-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 1.18em;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s;
+}
+.oj-theme-btn:hover, .oj-lang-btn:hover { background: #f1f6fb; }
+.oj-theme-menu, .oj-lang-menu {
+  display: none;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: var(--oj-card);
+  box-shadow: 0 4px 20px #0002;
+  border-radius: 10px;
+  padding: 8px 0;
+  z-index: 99;
+  min-width: 132px;
+  animation: fadein .22s;
+}
+.oj-theme-switcher.open .oj-theme-menu,
+.oj-lang-switcher.open .oj-lang-menu { display: block; }
+.oj-theme-menu button, .oj-lang-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 9px 20px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1em;
+  color: var(--oj-text);
+  border-radius: 7px;
+  transition: background .13s;
+}
+.oj-theme-menu button:hover, .oj-lang-menu button:hover { background: #eaf4ff; }
+@keyframes fadein { from { opacity: 0; transform: translateY(-8px);} to { opacity:1; transform: none;} }
+
+/* ========== 移动端菜单 ========== */
+.oj-menu-btn { display:none; background:none; border:none; font-size:1.5em; margin-left:18px; cursor:pointer; color:var(--oj-primary);}
 @media (max-width: 900px) {
-  .oj-header { flex-direction: row; align-items: center; padding: 0 2vw;}
-  .oj-header .oj-logo { font-size: 1.12em;}
+  .oj-header { padding: 0 3vw; }
+  .oj-header .oj-logo { font-size: 1.11em; }
   .oj-header .oj-nav, .oj-header .oj-tool { display: none; }
   .oj-menu-btn { display:inline-flex; align-items: center; }
 }
 .oj-mobile-menu {
-  position: fixed; top: 0; right: 0; width: 83vw; max-width: 340px; height: 100vh;
-  background: var(--oj-card); box-shadow: -2px 0 24px #0004; z-index: 99; padding: 22px 18px 0 18px; display: flex; flex-direction: column;
+  position: fixed; top: 0; right: 0; width: 85vw; max-width: 340px; height: 100vh;
+  background: var(--oj-card); box-shadow: -2px 0 24px #0004; z-index: 99; padding: 24px 18px 0 18px; display: flex; flex-direction: column;
   transform: translateX(110%); transition: transform 0.28s;
 }
 .oj-mobile-menu.active { transform: translateX(0); }
 .oj-mobile-mask { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0004; z-index: 98; }
 .oj-mobile-menu.active ~ .oj-mobile-mask { display: block; }
-
-/* 竖直排列菜单/工具 */
-.oj-mobile-menu .oj-nav, .oj-mobile-menu .oj-tool {
+.oj-mobile-menu .oj-nav {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin-bottom: 26px;
+  gap: 17px;
+  margin-bottom: 32px;
 }
 .oj-mobile-menu .oj-nav a {
   width: 100%;
@@ -85,13 +161,39 @@ html, body { height: 100%; background: var(--oj-bg); color: var(--oj-text); font
   background: var(--oj-primary);
   color: var(--oj-primary-contrast);
 }
-.oj-mobile-menu .oj-tool button {
-  width: 100%;
-  justify-content: flex-start;
-  padding: 10px 12px;
+.oj-mobile-menu .oj-tool {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.oj-mobile-menu .oj-theme-switcher, .oj-mobile-menu .oj-lang-switcher { position: static; }
+.oj-mobile-menu .oj-theme-menu, .oj-mobile-menu .oj-lang-menu {
+  position: static;
+  box-shadow: none;
+  background: none;
+  padding: 0;
+  min-width: 0;
+  border-radius: 0;
+  animation: none;
+}
+.oj-mobile-menu .oj-theme-menu button, .oj-mobile-menu .oj-lang-menu button {
+  padding: 7px 13px;
+  font-size: 0.98em;
+  border-radius: 8px;
+  width: auto;
+}
+.oj-mobile-menu .oj-theme-menu button:hover, .oj-mobile-menu .oj-lang-menu button:hover {
+  background: #eaf4ff;
 }
 
-/* ========== 卡片/保护卡/按钮/基础 ========== */
+/* ========== 卡片、按钮、输入框 ========== */
+.oj-container { flex: 1 0 auto; max-width: 1200px; margin: 40px auto 0; padding: 0 16px;}
+.oj-card {
+  background: var(--oj-card); border: 1.5px solid var(--oj-border); border-radius: var(--oj-radius); box-shadow: var(--oj-shadow);
+  padding: 30px; margin-bottom: 32px; transition: box-shadow 0.18s, border-color 0.18s;
+}
 .oj-card {
   background: var(--oj-card); border: 1.5px solid var(--oj-border); border-radius: var(--oj-radius); box-shadow: var(--oj-shadow);
   padding: 30px; margin-bottom: 32px; transition: box-shadow 0.18s, border-color 0.18s;
@@ -137,7 +239,6 @@ html, body { height: 100%; background: var(--oj-bg); color: var(--oj-text); font
   .oj-header .oj-logo img { height: 22px;}
   .oj-card { padding: 17px; }
 }
-
 /* ========== Icon 图标体系 ========== */
 .oj-icon {
   display: inline-flex; align-items: center; justify-content: center; font-size: 1.2em; vertical-align: middle;
@@ -186,7 +287,7 @@ pre, code {
 }
 pre { margin: 10px 0 0 0; max-width: 100%; }
 
-/* ========== 暗色主题：变量、净化背景与code ========== */
+/* ========== 暗色主题 ========== */
 .oj-theme-dark, .oj-theme-dark body, .oj-theme-dark html {
   --oj-bg: #161b22;
   --oj-card: #232735;
