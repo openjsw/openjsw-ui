@@ -179,52 +179,6 @@ export async function onRequestGet(context) {
 </div>
 <script src="/common.js"></script>
 <script>
-// 单按钮主题切换（light→dark→auto→light…）
-const THEME_SEQ = ['light', 'dark', 'auto'];
-const THEME_ICONS = { light: '☀️', dark: '🌙', auto: '🖥️' };
-function getNextTheme(cur) {
-  const idx = THEME_SEQ.indexOf(cur);
-  return THEME_SEQ[(idx + 1) % THEME_SEQ.length];
-}
-function updateThemeBtn(theme) {
-  document.getElementById('oj-theme-icon').textContent = THEME_ICONS[theme];
-  let btn = document.getElementById('oj-theme-toggle');
-  btn.setAttribute('aria-label', {
-    light: '当前为明亮模式，点击切换为暗色模式',
-    dark: '当前为暗色模式，点击切换为跟随系统',
-    auto: '当前为跟随系统，点击切换为明亮模式'
-  }[theme]);
-}
-function applyTheme(mode) {
-  const body = document.body;
-  body.classList.remove('oj-theme-dark');
-  if (mode === 'dark') {
-    body.classList.add('oj-theme-dark');
-    localStorage.setItem('oj-theme', 'dark');
-  } else if (mode === 'light') {
-    localStorage.setItem('oj-theme', 'light');
-  } else {
-    localStorage.removeItem('oj-theme');
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      body.classList.add('oj-theme-dark');
-    }
-  }
-  updateThemeBtn(mode);
-}
-document.addEventListener('DOMContentLoaded', () => {
-  let theme = localStorage.getItem('oj-theme') || 'auto';
-  applyTheme(theme);
-  document.getElementById('oj-theme-toggle').onclick = () => {
-    let now = localStorage.getItem('oj-theme') || 'auto';
-    let next = getNextTheme(now);
-    applyTheme(next);
-  };
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if(!localStorage.getItem('oj-theme')){
-      applyTheme('auto');
-    }
-  });
-});
 </script>
 </body>
 </html>`, {
