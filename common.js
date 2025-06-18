@@ -1,97 +1,75 @@
-/*!
- * openjsw 开放技术网 - 通用组件库 V0.1
- * 常用JS组件与工具函数
- * 依赖原生，无第三方库
- */
+// comont.js
 
-// 消息提示（自动消失） type: success | danger | warning | info
-function ojMsg(msg, type = 'info', duration = 2200) {
-  const dom = document.createElement('div');
-  dom.className = 'oj-msg oj-msg-' + type;
-  dom.innerText = msg;
-  document.body.appendChild(dom);
-  dom.style.position = 'fixed';
-  dom.style.top = '48px';
-  dom.style.left = '50%';
-  dom.style.transform = 'translateX(-50%)';
-  dom.style.zIndex = '99999';
-  setTimeout(() => { dom.remove(); }, duration);
-  return dom;
+// 1. Toast 弹窗功能
+function showToast(type, msg, duration = 3400) {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+  toast.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+  toast.tabIndex = 0;
+
+  let icon = '';
+  if (type === 'error') icon = '❌ ';
+  else if (type === 'info') icon = 'ℹ️ ';
+  else if (type === 'success') icon = '✅ ';
+  toast.innerHTML = icon + msg;
+
+  document.body.appendChild(toast);
+  toast.focus();
+
+  setTimeout(() => {
+    toast.classList.add('fadeout');
+    setTimeout(() => toast.remove(), 350);
+  }, duration);
 }
 
-// 简单确认框（callback为确定回调）
-function ojConfirm(msg, callback) {
-  let mask = document.createElement('div');
-  mask.className = 'oj-mask';
-  mask.innerHTML = `
-    <div class="oj-mask-content">
-      <div style="margin-bottom:16px">${msg}</div>
-      <button class="oj-btn oj-btn-primary" id="oj-confirm-ok">确定</button>
-      <button class="oj-btn" id="oj-confirm-cancel">取消</button>
-    </div>
-  `;
-  document.body.appendChild(mask);
-  mask.querySelector('#oj-confirm-ok').onclick = () => {
-    callback(true);
-    mask.remove();
-  };
-  mask.querySelector('#oj-confirm-cancel').onclick = () => {
-    callback(false);
-    mask.remove();
-  };
+// 2. note 区域动态插入（可选，用于页面提示）
+function setNote(msg, type = 'note') {
+  // type 可以是 'note' 或自定义，比如 'tip'。样式需配合CSS。
+  let note = document.querySelector('.note-dynamic');
+  if (!note) {
+    note = document.createElement('div');
+    note.className = 'note note-dynamic';
+    const container = document.querySelector('.container');
+    if (container) container.insertBefore(note, container.firstChild);
+    else document.body.insertBefore(note, document.body.firstChild);
+  }
+  note.innerText = msg;
 }
 
-// 加载遮罩
-function ojLoading(show, text = '加载中...') {
-  let mask = document.getElementById('oj-loading-mask');
-  if (show) {
-    if (!mask) {
-      mask = document.createElement('div');
-      mask.className = 'oj-mask';
-      mask.id = 'oj-loading-mask';
-      mask.innerHTML = `<div class="oj-mask-content">${text}</div>`;
-      document.body.appendChild(mask);
+// 3. 移动端抽屉菜单功能（与页面结构配合）
+document.addEventListener('DOMContentLoaded', () => {
+  const menuBtn = document.querySelector('.menu-btn');
+  const drawer = document.querySelector('.drawer');
+  if (menuBtn && drawer) {
+    menuBtn.addEventListener('click', () => {
+      drawer.classList.toggle('open');
+      // 聚焦第一个链接
+      if (drawer.classList.contains('open')) {
+        const firstLink = drawer.querySelector('a');
+        if (firstLink) firstLink.focus();
+      }
+    });
+    // ESC 关闭菜单
+    drawer.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        drawer.classList.remove('open');
+        menuBtn.focus();
+      }
+    });
+  }
+
+  // 4. 可访问性增强：所有按钮回车触发
+  document.body.addEventListener('keydown', (e) => {
+    if (e.target.matches('button, [role="button"], .btn') && e.key === 'Enter') {
+      e.target.click();
     }
-  } else if (mask) {
-    mask.remove();
-  }
-}
-
-// Tabs组件切换（使用 .oj-tabs, .oj-tab, .oj-tab-content结构）
-function ojTabs(selector) {
-  const tabs = document.querySelectorAll(selector + ' .oj-tab');
-  const contents = document.querySelectorAll(selector + ' .oj-tab-content');
-  tabs.forEach((tab, idx) => {
-    tab.onclick = function () {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      contents.forEach((c, cidx) => {
-        c.style.display = cidx === idx ? 'block' : 'none';
-      });
-    };
   });
-  // 初始化显示第一个tab内容
-  if (tabs[0]) tabs[0].click();
-}
 
-// 复制到剪贴板
-function ojCopy(text) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text);
-    ojMsg('已复制', 'success');
-  } else {
-    // 兼容性处理
-    let ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    ojMsg('已复制', 'success');
-  }
-}
+  // 示例：可以自动显示一次 info toast
+  // showToast('info', '页面加载成功！');
+});
 
-// 模块导出（支持ESM和全局用法）
-window.openjsw = {
-  ojMsg, ojConfirm, ojLoading, ojTabs, ojCopy
-};
+// 5. 支持 toast 动画 fadeout
+// 建议在CSS中加：
+// .toast.fadeout { opacity: 0; transform: translateY(-30px); transition: all 0.3s; }
